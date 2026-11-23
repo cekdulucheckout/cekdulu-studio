@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- html2canvas untuk render gambar resolusi penuh -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
@@ -99,7 +98,7 @@
       color: #8ee0a3;
     }
 
-    /* Preview Wrapper (Responsive Scaling) */
+    /* Preview Wrapper */
     .preview-stage {
       width: 100%;
       display: flex;
@@ -124,7 +123,6 @@
       flex-shrink: 0;
     }
 
-    /* Layout Variants */
     /* 1. IG & FB: 1080 x 1350 */
     #posterCard.size-ig {
       width: 1080px;
@@ -158,7 +156,7 @@
       font-size: 30px;
     }
 
-    /* 3. X & Threads: 1600 x 900 (Landscape Split Layout) */
+    /* 3. X & Threads: 1600 x 900 */
     #posterCard.size-x {
       width: 1600px;
       height: 900px;
@@ -535,7 +533,7 @@
       cursor: pointer;
     }
 
-    /* AI Box */
+    /* AI Copywriter Box */
     .ai-box {
       background: #17241c;
       border: 1px solid #2e4a38;
@@ -554,6 +552,34 @@
       font-size: 12.5px;
       font-weight: 700;
       color: #8ee0a3;
+    }
+    .ss-upload-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 22, 18, 0.7);
+      border: 1px dashed #395c45;
+      padding: 8px 10px;
+      border-radius: 9px;
+    }
+    .btn-ss-pick {
+      background: #243b2c;
+      color: #b7ebd0;
+      border: 1px solid #3c634a;
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .ss-info-text {
+      font-size: 11.5px;
+      color: #96b09f;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
     }
     .btn-ai {
       background: linear-gradient(135deg, #2e7d47, #1f5c33);
@@ -577,6 +603,7 @@
       font-size: 11.5px;
       color: #a3c4ad;
       display: none;
+      line-height: 1.4;
     }
     .checkbox-inline {
       display: flex;
@@ -594,7 +621,7 @@
     <!-- Header -->
     <div class="header">
       <h1 id="headerTitle">Template Affiliate • 1080×1350</h1>
-      <p>Pilih ukuran platform, unggah 1 atau beberapa foto produk sekaligus (AI Gemini otomatis mengisi teks), sesuaikan, lalu Unduh PNG.</p>
+      <p>Pilih ukuran platform, unggah foto produk untuk poster, dan/atau unggah screenshot halaman Shopee agar AI meracik judul, deskripsi hook, dan harga otomatis.</p>
     </div>
 
     <!-- Platform Size Switcher -->
@@ -627,9 +654,9 @@
 
     <!-- Editor Controls -->
     <div class="controls-panel">
-      <!-- Upload Multi-Foto -->
+      <!-- Upload Multi-Foto Produk (Untuk Poster) -->
       <div class="control-group">
-        <label>Foto produk (bisa pilih lebih dari 1 foto)</label>
+        <label>1. Foto produk untuk poster (bisa pilih lebih dari 1 foto)</label>
         <div class="file-upload-box">
           <input type="file" id="imageInput" accept="image/*" multiple style="display: none;" />
           <div class="file-actions">
@@ -641,17 +668,27 @@
         </div>
       </div>
 
-      <!-- Gemini API Auto-Fill Section -->
+      <!-- AI Copywriter & Screenshot Reader Box -->
       <div class="ai-box">
         <div class="ai-header">
-          <span>✨ Auto-Generate Teks (Gemini AI)</span>
+          <span>✨ Copywriter Otomatis (Baca Screenshot / Foto)</span>
           <label class="checkbox-inline">
-            <input type="checkbox" id="autoGenOnUpload" checked /> Otomatis saat unggah
+            <input type="checkbox" id="autoGenOnUpload" checked /> Auto-jalan
           </label>
         </div>
+
         <input type="password" id="geminiApiKey" placeholder="Tempel Gemini API Key kamu di sini (tersimpan di browser)" />
+
+        <!-- Upload Screenshot Shopee (Tidak tampil di poster, hanya dibaca AI) -->
+        <div class="ss-upload-row">
+          <input type="file" id="screenshotInput" accept="image/*" multiple style="display: none;" />
+          <button type="button" class="btn-ss-pick" id="pickSsBtn">📄 Upload Screenshot Shopee</button>
+          <span class="ss-info-text" id="ssInfoText">Opsional: SS judul, deskripsi & harga</span>
+          <button type="button" class="btn-file-clear" id="clearSsBtn" style="padding: 5px 8px;">×</button>
+        </div>
+
         <button class="btn-ai" id="generateAiBtn" type="button">
-          ✨ Generate Judul, Deskripsi & Keunggulan dari Foto
+          ✍️ Racik Judul, Hook & Keunggulan Natural
         </button>
         <div class="ai-status" id="aiStatus"></div>
       </div>
@@ -688,14 +725,14 @@
 
       <!-- Deskripsi Singkat -->
       <div class="control-group">
-        <label>Deskripsi singkat</label>
-        <textarea id="inputDesc" rows="2">Praktis, hemat tempat, serbaguna. Tersedia ukuran 3L, 5L, 10L.</textarea>
+        <label>Deskripsi singkat (hook)</label>
+        <textarea id="inputDesc" rows="2">Nggak makan tempat di kamar mandi sempit, habis pakai tinggal lipat rata ke dinding.</textarea>
       </div>
 
       <!-- Keunggulan -->
       <div class="control-group">
         <label>Keunggulan (pisahkan dengan |)</label>
-        <input type="text" id="inputBullets" value="Bisa dilipat | Hemat tempat | Kuat & tahan lama" />
+        <input type="text" id="inputBullets" value="Silikon tebal lentur | Muat 3L–10L | Ada lubang gantung" />
       </div>
 
       <!-- Harga & Ajakan Beli -->
@@ -723,8 +760,8 @@
     let currentSize = "ig";
     let currentWidth = 1080;
     let currentHeight = 1350;
-    // Array of { dataUrl: string, mimeType: string }
-    let uploadedImages = [];
+    let uploadedImages = [];      // Foto produk bersih untuk poster
+    let screenshotImages = [];    // Screenshot halaman Shopee (hanya dibaca AI)
 
     // DOM Elements
     const posterCard = document.getElementById("posterCard");
@@ -738,6 +775,11 @@
     const clearFilesBtn = document.getElementById("clearFilesBtn");
     const photoCountBadge = document.getElementById("photoCountBadge");
     const thumbStrip = document.getElementById("thumbStrip");
+
+    const screenshotInput = document.getElementById("screenshotInput");
+    const pickSsBtn = document.getElementById("pickSsBtn");
+    const clearSsBtn = document.getElementById("clearSsBtn");
+    const ssInfoText = document.getElementById("ssInfoText");
 
     const zoomRange = document.getElementById("zoomRange");
     const brightnessRange = document.getElementById("brightnessRange");
@@ -756,7 +798,7 @@
     const autoGenOnUpload = document.getElementById("autoGenOnUpload");
     const aiStatus = document.getElementById("aiStatus");
 
-    // Load saved API key from localStorage
+    // Load saved API key
     const savedKey = localStorage.getItem("cekdulu_gemini_api_key");
     if (savedKey) geminiApiKeyInput.value = savedKey;
 
@@ -764,7 +806,7 @@
       localStorage.setItem("cekdulu_gemini_api_key", geminiApiKeyInput.value.trim());
     });
 
-    // Build Collage HTML based on number of uploaded images
+    // Build Collage HTML for Poster
     function buildImageCollageHtml() {
       const count = uploadedImages.length;
       if (count === 0) {
@@ -793,7 +835,6 @@
       return `<div class="photo-grid ${gridClass}">${slotsHtml}</div>`;
     }
 
-    // Update Thumbnail Strip in Control Panel
     function renderThumbnails() {
       const count = uploadedImages.length;
       photoCountBadge.textContent = `${count} foto dipilih`;
@@ -818,7 +859,19 @@
       });
     }
 
-    // Render Poster HTML structure & update values
+    function updateSsUi() {
+      const count = screenshotImages.length;
+      if (count === 0) {
+        ssInfoText.textContent = "Opsional: SS judul, deskripsi & harga";
+        ssInfoText.style.color = "#96b09f";
+        clearSsBtn.style.display = "none";
+      } else {
+        ssInfoText.textContent = `${count} screenshot Shopee siap dibaca AI`;
+        ssInfoText.style.color = "#8ee0a3";
+        clearSsBtn.style.display = "inline-block";
+      }
+    }
+
     function renderPoster() {
       const brand = inputBrand.value || "CEKDULU.CHECKOUT";
       const num = inputNumber.value || "No. 001";
@@ -927,7 +980,7 @@
       });
     });
 
-    // Live Form Input Listeners
+    // Live Form Listeners
     [
       zoomRange, brightnessRange, inputNumber, inputCategory,
       inputTitle, inputDesc, inputBullets, inputPrice, inputCta, inputBrand
@@ -935,9 +988,22 @@
 
     window.addEventListener("resize", scalePreview);
 
-    // File Picker & Clear Buttons
-    pickFilesBtn.addEventListener("click", () => imageInput.click());
+    // Helper: Read FileList to Base64 array
+    function readFilesAsDataUrls(fileList) {
+      return Promise.all(
+        Array.from(fileList).map(file => new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = ev => resolve({
+            dataUrl: ev.target.result,
+            mimeType: file.type || "image/jpeg"
+          });
+          reader.readAsDataURL(file);
+        }))
+      );
+    }
 
+    // Poster Product Photos Upload
+    pickFilesBtn.addEventListener("click", () => imageInput.click());
     clearFilesBtn.addEventListener("click", () => {
       uploadedImages = [];
       imageInput.value = "";
@@ -945,28 +1011,11 @@
       renderPoster();
     });
 
-    // Handle Multiple Image Uploads
     imageInput.addEventListener("change", async (e) => {
-      const files = Array.from(e.target.files || []);
-      if (files.length === 0) return;
-
-      const readPromises = files.map(file => {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = (ev) => {
-            resolve({
-              dataUrl: ev.target.result,
-              mimeType: file.type || "image/jpeg"
-            });
-          };
-          reader.readAsDataURL(file);
-        });
-      });
-
-      const newImages = await Promise.all(readPromises);
-      uploadedImages = uploadedImages.concat(newImages);
+      if (!e.target.files || e.target.files.length === 0) return;
+      const newImgs = await readFilesAsDataUrls(e.target.files);
+      uploadedImages = uploadedImages.concat(newImgs);
       imageInput.value = "";
-
       renderThumbnails();
       renderPoster();
 
@@ -975,33 +1024,71 @@
       }
     });
 
-    // Gemini API Vision Auto-Generator (Analyzes all uploaded photos)
+    // Screenshot Shopee Upload (AI Context Only)
+    pickSsBtn.addEventListener("click", () => screenshotInput.click());
+    clearSsBtn.addEventListener("click", () => {
+      screenshotImages = [];
+      screenshotInput.value = "";
+      updateSsUi();
+    });
+
+    screenshotInput.addEventListener("change", async (e) => {
+      if (!e.target.files || e.target.files.length === 0) return;
+      const newSs = await readFilesAsDataUrls(e.target.files);
+      screenshotImages = screenshotImages.concat(newSs);
+      screenshotInput.value = "";
+      updateSsUi();
+
+      if (autoGenOnUpload.checked && geminiApiKeyInput.value.trim()) {
+        await generateWithGemini();
+      }
+    });
+
+    // Gemini API Human-Style Copywriter & Screenshot Extractor
     async function generateWithGemini() {
       const apiKey = geminiApiKeyInput.value.trim();
       if (!apiKey) {
         showStatus("⚠️ Masukkan Gemini API Key terlebih dahulu.", "#fbbf24");
         return;
       }
-      if (uploadedImages.length === 0) {
-        showStatus("⚠️ Unggah minimal 1 foto produk terlebih dahulu.", "#fbbf24");
+
+      const totalSourceImages = screenshotImages.length + uploadedImages.length;
+      if (totalSourceImages === 0) {
+        showStatus("⚠️ Unggah foto produk atau screenshot halaman Shopee terlebih dahulu.", "#fbbf24");
         return;
       }
 
       generateAiBtn.disabled = true;
-      showStatus(`⏳ Gemini sedang menganalisis ${uploadedImages.length} foto produk...`, "#8ee0a3");
+      const sourceNote = screenshotImages.length > 0
+        ? `membaca ${screenshotImages.length} screenshot Shopee`
+        : `menganalisis ${uploadedImages.length} foto produk`;
+      showStatus(`⏳ Copywriter AI sedang ${sourceNote}...`, "#8ee0a3");
 
       try {
-        const promptText = `Kamu adalah copywriter katalog affiliate Indonesia bernama cekdulu.checkout dengan gaya bahasa jujur, singkat, padat, dan meyakinkan ("Murah itu wajib, bagus itu harus").
-Analisis semua foto produk ini dan buat teks untuk kartu katalog sosial media dalam format JSON murni tanpa markdown:
+        const promptText = `Kamu adalah senior copywriter manusia asli untuk akun kurasi barang rumah & kos Indonesia "cekdulu.checkout" (slogan: "Murah itu wajib, bagus itu harus").
+
+TUGAS UTAMA:
+Baca seluruh gambar yang dilampirkan (baik screenshot halaman produk Shopee yang berisi judul panjang, deskripsi toko, spesifikasi bahan/ukuran, dan harga, maupun foto produknya). Sarikan menjadi teks kartu katalog yang ringkas, jujur, tajam, dan bikin orang langsung pengen klik.
+
+ATURAN GAYA BAHASA (WAJIB DIPATUHI AGAR TIDAK TERLIHAT SEPERTI AI):
+1. DILARANG KERAS memakai kata-kata klise AI seperti: "solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya".
+2. Gunakan bahasa percakapan Indonesia yang natural, to the point, dan membumi (seperti teman yang habis ngecek barang bagus lalu ngasih tau).
+3. Hook di deskripsi harus langsung menyentuh masalah nyata atau detail fisik spesifik dari produk (misal: "Dapur sempit sering berantakan? Rak putar ini bikin bumbu gampang diambil tanpa ngacak-ngacak belakangnya." atau "Nggak makan tempat di kamar mandi sempit, habis pakai tinggal lipat rata ke dinding.").
+4. Ambil fakta konkret dari screenshot (ukuran cm/liter, bahan stainless/silikon/PP, kapasitas kg, isi paket) untuk dimasukkan ke judul, deskripsi, atau 3 poin keunggulan.
+5. Untuk harga: jika di screenshot terlihat harga produk, ekstrak angka terendahnya lalu bulatkan rapi ke ribuan terdekat. Jika ada rentang/variasi harga, tulis "Mulai RpXX.XXX". Jika harga tunggal, tulis "RpXX.XXX". Jika harga tidak terlihat di gambar, isi string kosong "".
+
+Keluarkan HANYA JSON murni tanpa markdown:
 {
-  "kategori": "Pilih 1 yang paling pas dari: Alat Dapur | Wadah & Rak | Alat Kebersihan | Kamar Mandi | Perlengkapan Rumah | Dekorasi Rumah | Gadget & Elektronik | Pakaian & Outfit",
-  "nama_produk": "Nama produk singkat, jelas, maksimal 4-5 kata (contoh: Ember Lipat Portable)",
-  "deskripsi": "1 kalimat singkat deskripsi manfaat & variasi produk, maksimal 85 karakter",
-  "keunggulan": "3 poin keunggulan singkat dipisahkan tanda | (contoh: Bisa dilipat | Hemat tempat | Kuat & tahan lama)"
+  "kategori": "Pilih 1 paling pas: Alat Dapur | Wadah & Rak | Alat Kebersihan | Kamar Mandi | Perlengkapan Rumah | Dekorasi Rumah | Gadget & Elektronik | Pakaian & Outfit",
+  "nama_produk": "Nama produk bersih tanpa spam keyword Shopee, 2-5 kata, cantumkan ukuran/kapasitas utama bila relevan (contoh: Saringan Minyak Stainless 1,3L)",
+  "deskripsi": "1 kalimat hook tajam & natural yang bikin penasaran atau langsung terasa manfaatnya, maksimal 95 karakter",
+  "keunggulan": "3 fakta keunggulan konkret dipisahkan tanda | (contoh: Bahan stainless anti karat | Ada tutup & saringan halus | Gagang anti panas)",
+  "harga": "Mulai RpXX.XXX atau RpXX.XXX atau kosong jika tidak ada info harga di gambar"
 }`;
 
-        // Send up to 4 images to Gemini Vision
-        const imageParts = uploadedImages.slice(0, 4).map(img => ({
+        // Prioritize screenshots first so AI reads title, specs, and price clearly, then product photos
+        const combinedImages = [...screenshotImages, ...uploadedImages].slice(0, 5);
+        const imageParts = combinedImages.map(img => ({
           inline_data: {
             mime_type: img.mimeType,
             data: img.dataUrl.split(",")[1]
@@ -1022,7 +1109,7 @@ Analisis semua foto produk ini dan buat teks untuk kartu katalog sosial media da
               }],
               generationConfig: {
                 response_mime_type: "application/json",
-                temperature: 0.4
+                temperature: 0.65
               }
             })
           }
@@ -1041,9 +1128,10 @@ Analisis semua foto produk ini dan buat teks untuk kartu katalog sosial media da
         if (parsed.nama_produk) inputTitle.value = parsed.nama_produk;
         if (parsed.deskripsi) inputDesc.value = parsed.deskripsi;
         if (parsed.keunggulan) inputBullets.value = parsed.keunggulan;
+        if (parsed.harga && parsed.harga.trim() !== "") inputPrice.value = parsed.harga.trim();
 
         renderPoster();
-        showStatus(`✅ Teks otomatis berhasil diisi dari ${uploadedImages.length} foto!`, "#8ee0a3");
+        showStatus("✅ Judul, hook natural & detail produk berhasil diracik!", "#8ee0a3");
       } catch (err) {
         console.error(err);
         showStatus(`❌ Gagal generate: ${err.message}`, "#f87171");
@@ -1100,6 +1188,7 @@ Analisis semua foto produk ini dan buat teks untuk kartu katalog sosial media da
 
     // Initial render
     renderThumbnails();
+    updateSsUi();
     renderPoster();
   </script>
 </body>
