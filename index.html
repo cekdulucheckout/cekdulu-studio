@@ -22,7 +22,6 @@
       --card-box: #ebe5d5;
       --card-text: #1c2920;
       --card-sub: #5c665f;
-      --btn-primary: #3b82f6;
     }
 
     * {
@@ -110,7 +109,7 @@
       padding: 4px 0;
     }
 
-    /* Actual Poster Card Base (Rendered at exact pixel scale when exporting) */
+    /* Actual Poster Card Base */
     #posterCard {
       background-color: var(--card-cream);
       color: var(--card-text);
@@ -201,6 +200,7 @@
       text-transform: uppercase;
     }
 
+    /* Multi-Photo Collage Container */
     .image-box {
       width: 100%;
       background-color: var(--card-box);
@@ -211,16 +211,70 @@
       justify-content: center;
       position: relative;
     }
-    .image-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.1s ease, filter 0.1s ease;
-    }
     .image-placeholder {
       color: #8f8a7c;
       font-size: 28px;
       font-weight: 500;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .photo-grid {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      gap: 12px;
+      background-color: var(--card-cream);
+    }
+    .photo-grid.count-1 {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      gap: 0;
+    }
+    .photo-grid.count-2 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
+    .photo-grid.count-3 {
+      grid-template-columns: 1.35fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+    .photo-grid.count-3 .photo-slot:first-child {
+      grid-row: 1 / 3;
+    }
+    .photo-grid.count-4 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .photo-slot {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      background-color: var(--card-box);
+      border-radius: 22px;
+    }
+    .photo-grid.count-1 .photo-slot {
+      border-radius: 32px;
+    }
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.1s ease, filter 0.1s ease;
+    }
+    .more-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 28, 23, 0.58);
+      color: #fff;
+      font-size: 46px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .card-body {
@@ -397,14 +451,82 @@
       padding: 10px 12px;
       border-radius: 10px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
       gap: 10px;
     }
-    input[type="file"] {
+    .file-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-file-pick {
+      background: #2b3a30;
+      color: #e4ede6;
+      border: 1px solid #3f5446;
+      padding: 8px 12px;
+      border-radius: 8px;
       font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-file-clear {
+      background: transparent;
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+    }
+    .photo-count-badge {
+      font-size: 12px;
       color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    /* Thumbnail Strip */
+    .thumb-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .thumb-strip:empty {
+      display: none;
+    }
+    .thumb-item {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      border: 1px solid var(--border-dark);
+    }
+    .thumb-item img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumb-remove {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      border: none;
+      font-size: 11px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     input[type="range"] {
@@ -472,7 +594,7 @@
     <!-- Header -->
     <div class="header">
       <h1 id="headerTitle">Template Affiliate • 1080×1350</h1>
-      <p>Pilih ukuran platform, unggah foto produk (AI Gemini otomatis mengisi teks jika API aktif), sesuaikan posisi, lalu klik Unduh PNG.</p>
+      <p>Pilih ukuran platform, unggah 1 atau beberapa foto produk sekaligus (AI Gemini otomatis mengisi teks), sesuaikan, lalu Unduh PNG.</p>
     </div>
 
     <!-- Platform Size Switcher -->
@@ -493,9 +615,7 @@
 
     <!-- Live Scaled Poster Preview -->
     <div class="preview-stage" id="previewStage">
-      <div id="posterCard" class="size-ig">
-        <!-- Container layout will be structured dynamically for IG/TikTok vs X -->
-      </div>
+      <div id="posterCard" class="size-ig"></div>
     </div>
 
     <!-- Download Button -->
@@ -507,11 +627,17 @@
 
     <!-- Editor Controls -->
     <div class="controls-panel">
-      <!-- Upload Foto -->
+      <!-- Upload Multi-Foto -->
       <div class="control-group">
-        <label>Foto produk</label>
+        <label>Foto produk (bisa pilih lebih dari 1 foto)</label>
         <div class="file-upload-box">
-          <input type="file" id="imageInput" accept="image/*" />
+          <input type="file" id="imageInput" accept="image/*" multiple style="display: none;" />
+          <div class="file-actions">
+            <button type="button" class="btn-file-pick" id="pickFilesBtn">📷 Pilih / Tambah Foto</button>
+            <button type="button" class="btn-file-clear" id="clearFilesBtn">Hapus Semua</button>
+            <span class="photo-count-badge" id="photoCountBadge">0 foto dipilih</span>
+          </div>
+          <div class="thumb-strip" id="thumbStrip"></div>
         </div>
       </div>
 
@@ -597,8 +723,8 @@
     let currentSize = "ig";
     let currentWidth = 1080;
     let currentHeight = 1350;
-    let uploadedImageDataUrl = null;
-    let uploadedImageMime = "image/jpeg";
+    // Array of { dataUrl: string, mimeType: string }
+    let uploadedImages = [];
 
     // DOM Elements
     const posterCard = document.getElementById("posterCard");
@@ -608,6 +734,11 @@
     const downloadBtn = document.getElementById("downloadBtn");
 
     const imageInput = document.getElementById("imageInput");
+    const pickFilesBtn = document.getElementById("pickFilesBtn");
+    const clearFilesBtn = document.getElementById("clearFilesBtn");
+    const photoCountBadge = document.getElementById("photoCountBadge");
+    const thumbStrip = document.getElementById("thumbStrip");
+
     const zoomRange = document.getElementById("zoomRange");
     const brightnessRange = document.getElementById("brightnessRange");
 
@@ -633,6 +764,60 @@
       localStorage.setItem("cekdulu_gemini_api_key", geminiApiKeyInput.value.trim());
     });
 
+    // Build Collage HTML based on number of uploaded images
+    function buildImageCollageHtml() {
+      const count = uploadedImages.length;
+      if (count === 0) {
+        return `<div class="image-placeholder">Unggah 1 atau beberapa foto produk</div>`;
+      }
+
+      const zoom = zoomRange.value;
+      const brightness = brightnessRange.value;
+      const displayCount = Math.min(count, 4);
+      const gridClass = `count-${displayCount}`;
+
+      let slotsHtml = "";
+      for (let i = 0; i < displayCount; i++) {
+        const imgObj = uploadedImages[i];
+        const extraBadge = (i === 3 && count > 4)
+          ? `<div class="more-overlay">+${count - 4}</div>`
+          : "";
+        slotsHtml += `
+          <div class="photo-slot">
+            <img src="${imgObj.dataUrl}" style="transform: scale(${zoom}); filter: brightness(${brightness});" alt="Produk ${i + 1}" />
+            ${extraBadge}
+          </div>
+        `;
+      }
+
+      return `<div class="photo-grid ${gridClass}">${slotsHtml}</div>`;
+    }
+
+    // Update Thumbnail Strip in Control Panel
+    function renderThumbnails() {
+      const count = uploadedImages.length;
+      photoCountBadge.textContent = `${count} foto dipilih`;
+      clearFilesBtn.style.display = count > 0 ? "inline-block" : "none";
+
+      thumbStrip.innerHTML = uploadedImages
+        .map((img, idx) => `
+          <div class="thumb-item">
+            <img src="${img.dataUrl}" alt="Thumb ${idx + 1}" />
+            <button type="button" class="thumb-remove" data-idx="${idx}" title="Hapus foto">×</button>
+          </div>
+        `)
+        .join("");
+
+      thumbStrip.querySelectorAll(".thumb-remove").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const removeIdx = parseInt(btn.dataset.idx, 10);
+          uploadedImages.splice(removeIdx, 1);
+          renderThumbnails();
+          renderPoster();
+        });
+      });
+    }
+
     // Render Poster HTML structure & update values
     function renderPoster() {
       const brand = inputBrand.value || "CEKDULU.CHECKOUT";
@@ -644,7 +829,6 @@
       const priceText = inputPrice.value.trim();
       const cta = inputCta.value || "Cek di Shopee →";
 
-      // Split "Mulai " label if user starts price with "Mulai "
       let priceLabel = "";
       let priceMain = priceText;
       if (priceText.toLowerCase().startsWith("mulai ")) {
@@ -659,16 +843,11 @@
         .map(b => `<span>${escapeHtml(b)}</span>`)
         .join("");
 
-      const zoom = zoomRange.value;
-      const brightness = brightnessRange.value;
-      const imageHtml = uploadedImageDataUrl
-        ? `<img src="${uploadedImageDataUrl}" style="transform: scale(${zoom}); filter: brightness(${brightness});" alt="Produk" />`
-        : `<div class="image-placeholder">Unggah foto produk</div>`;
+      const imageHtml = buildImageCollageHtml();
 
       posterCard.className = `size-${currentSize}`;
 
       if (currentSize === "x") {
-        // Landscape split layout for X & Threads (1600x900)
         posterCard.innerHTML = `
           <div class="x-left">
             <div class="image-box">${imageHtml}</div>
@@ -694,7 +873,6 @@
           </div>
         `;
       } else {
-        // Vertical layout for IG/FB (1080x1350) and TikTok (1080x1920)
         posterCard.innerHTML = `
           <div class="card-top-bar">
             <span>${escapeHtml(brand)}</span>
@@ -720,7 +898,6 @@
       scalePreview();
     }
 
-    // Scale poster to fit mobile/desktop viewport cleanly
     function scalePreview() {
       const containerWidth = previewStage.clientWidth;
       const scale = Math.min(containerWidth / currentWidth, 1);
@@ -758,50 +935,78 @@
 
     window.addEventListener("resize", scalePreview);
 
-    // Handle Image Upload
-    imageInput.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      uploadedImageMime = file.type || "image/jpeg";
+    // File Picker & Clear Buttons
+    pickFilesBtn.addEventListener("click", () => imageInput.click());
 
-      const reader = new FileReader();
-      reader.onload = async (ev) => {
-        uploadedImageDataUrl = ev.target.result;
-        renderPoster();
-
-        // Auto-generate via Gemini if API key is present and checkbox is checked
-        if (autoGenOnUpload.checked && geminiApiKeyInput.value.trim()) {
-          await generateWithGemini();
-        }
-      };
-      reader.readAsDataURL(file);
+    clearFilesBtn.addEventListener("click", () => {
+      uploadedImages = [];
+      imageInput.value = "";
+      renderThumbnails();
+      renderPoster();
     });
 
-    // Gemini API Vision Auto-Generator
+    // Handle Multiple Image Uploads
+    imageInput.addEventListener("change", async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
+
+      const readPromises = files.map(file => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            resolve({
+              dataUrl: ev.target.result,
+              mimeType: file.type || "image/jpeg"
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      const newImages = await Promise.all(readPromises);
+      uploadedImages = uploadedImages.concat(newImages);
+      imageInput.value = "";
+
+      renderThumbnails();
+      renderPoster();
+
+      if (autoGenOnUpload.checked && geminiApiKeyInput.value.trim()) {
+        await generateWithGemini();
+      }
+    });
+
+    // Gemini API Vision Auto-Generator (Analyzes all uploaded photos)
     async function generateWithGemini() {
       const apiKey = geminiApiKeyInput.value.trim();
       if (!apiKey) {
         showStatus("⚠️ Masukkan Gemini API Key terlebih dahulu.", "#fbbf24");
         return;
       }
-      if (!uploadedImageDataUrl) {
-        showStatus("⚠️ Unggah foto produk terlebih dahulu.", "#fbbf24");
+      if (uploadedImages.length === 0) {
+        showStatus("⚠️ Unggah minimal 1 foto produk terlebih dahulu.", "#fbbf24");
         return;
       }
 
       generateAiBtn.disabled = true;
-      showStatus("⏳ Gemini sedang menganalisis foto produk...", "#8ee0a3");
+      showStatus(`⏳ Gemini sedang menganalisis ${uploadedImages.length} foto produk...`, "#8ee0a3");
 
       try {
-        const base64Data = uploadedImageDataUrl.split(",")[1];
         const promptText = `Kamu adalah copywriter katalog affiliate Indonesia bernama cekdulu.checkout dengan gaya bahasa jujur, singkat, padat, dan meyakinkan ("Murah itu wajib, bagus itu harus").
-Analisis foto produk ini dan buat teks untuk kartu katalog sosial media dalam format JSON murni tanpa markdown:
+Analisis semua foto produk ini dan buat teks untuk kartu katalog sosial media dalam format JSON murni tanpa markdown:
 {
   "kategori": "Pilih 1 yang paling pas dari: Alat Dapur | Wadah & Rak | Alat Kebersihan | Kamar Mandi | Perlengkapan Rumah | Dekorasi Rumah | Gadget & Elektronik | Pakaian & Outfit",
   "nama_produk": "Nama produk singkat, jelas, maksimal 4-5 kata (contoh: Ember Lipat Portable)",
   "deskripsi": "1 kalimat singkat deskripsi manfaat & variasi produk, maksimal 85 karakter",
   "keunggulan": "3 poin keunggulan singkat dipisahkan tanda | (contoh: Bisa dilipat | Hemat tempat | Kuat & tahan lama)"
 }`;
+
+        // Send up to 4 images to Gemini Vision
+        const imageParts = uploadedImages.slice(0, 4).map(img => ({
+          inline_data: {
+            mime_type: img.mimeType,
+            data: img.dataUrl.split(",")[1]
+          }
+        }));
 
         const response = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
@@ -812,12 +1017,7 @@ Analisis foto produk ini dan buat teks untuk kartu katalog sosial media dalam fo
               contents: [{
                 parts: [
                   { text: promptText },
-                  {
-                    inline_data: {
-                      mime_type: uploadedImageMime,
-                      data: base64Data
-                    }
-                  }
+                  ...imageParts
                 ]
               }],
               generationConfig: {
@@ -843,7 +1043,7 @@ Analisis foto produk ini dan buat teks untuk kartu katalog sosial media dalam fo
         if (parsed.keunggulan) inputBullets.value = parsed.keunggulan;
 
         renderPoster();
-        showStatus("✅ Teks otomatis berhasil diisi dari foto!", "#8ee0a3");
+        showStatus(`✅ Teks otomatis berhasil diisi dari ${uploadedImages.length} foto!`, "#8ee0a3");
       } catch (err) {
         console.error(err);
         showStatus(`❌ Gagal generate: ${err.message}`, "#f87171");
@@ -860,14 +1060,13 @@ Analisis foto produk ini dan buat teks untuk kartu katalog sosial media dalam fo
       aiStatus.textContent = msg;
     }
 
-    // Download High-Resolution PNG (1080x1350, 1080x1920, or 1600x900)
+    // Download High-Resolution PNG
     downloadBtn.addEventListener("click", async () => {
       downloadBtn.disabled = true;
       const originalHtml = downloadBtn.innerHTML;
       downloadBtn.innerHTML = "⏳ Menyimpan gambar resolusi penuh...";
 
       try {
-        // Temporarily reset CSS scale to 1 so html2canvas captures exact native pixels
         const prevTransform = posterCard.style.transform;
         posterCard.style.transform = "scale(1)";
 
@@ -900,6 +1099,7 @@ Analisis foto produk ini dan buat teks untuk kartu katalog sosial media dalam fo
     });
 
     // Initial render
+    renderThumbnails();
     renderPoster();
   </script>
 </body>
