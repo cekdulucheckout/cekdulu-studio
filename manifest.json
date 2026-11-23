@@ -1,0 +1,19 @@
+{
+  "name": "CekDulu Studio",
+  "short_name": "CekDulu Studio",
+  "description": "Affiliate Content Generator untuk cekdulu.checkout",
+  "start_url": "/cekdulu-studio/",
+  "scope": "/cekdulu-studio/",
+  "display": "standalone",
+  "background_color": "#141c17",
+  "theme_color": "#141c17",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
