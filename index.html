@@ -48,7 +48,6 @@
       gap: 16px;
     }
 
-    /* Header */
     .header {
       display: flex;
       flex-direction: column;
@@ -65,7 +64,6 @@
       line-height: 1.45;
     }
 
-    /* Platform Size Selector */
     .size-tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -98,7 +96,6 @@
       color: #8ee0a3;
     }
 
-    /* Preview Wrapper */
     .preview-stage {
       width: 100%;
       display: flex;
@@ -108,8 +105,7 @@
       padding: 4px 0;
     }
 
-    /* Actual Poster Card Base (Clean edge, no shadow artifact on export) */
-    #posterCard {
+    .poster-card {
       background-color: var(--card-cream);
       color: var(--card-text);
       border-radius: 32px;
@@ -122,47 +118,38 @@
       flex-shrink: 0;
     }
 
-    /* Clean export mode (removes rounded corner/shadow artifacts when saving) */
-    #posterCard.exporting {
-      border-radius: 0 !important;
-      box-shadow: none !important;
-    }
-
-    /* 1. IG & FB: 1080 x 1350 */
-    #posterCard.size-ig {
+    .poster-card.size-ig {
       width: 1080px;
       height: 1350px;
       padding: 60px 68px;
     }
-    #posterCard.size-ig .image-box {
+    .poster-card.size-ig .image-box {
       height: 600px;
       margin: 28px 0 32px 0;
     }
 
-    /* 2. TikTok: 1080 x 1920 */
-    #posterCard.size-tiktok {
+    .poster-card.size-tiktok {
       width: 1080px;
       height: 1920px;
       padding: 105px 72px 125px 72px;
     }
-    #posterCard.size-tiktok .image-box {
+    .poster-card.size-tiktok .image-box {
       height: 840px;
       margin: 40px 0 46px 0;
     }
-    #posterCard.size-tiktok .card-title {
+    .poster-card.size-tiktok .card-title {
       font-size: 70px;
       margin-bottom: 22px;
     }
-    #posterCard.size-tiktok .card-desc {
+    .poster-card.size-tiktok .card-desc {
       font-size: 33px;
       margin-bottom: 26px;
     }
-    #posterCard.size-tiktok .card-bullets {
+    .poster-card.size-tiktok .card-bullets {
       font-size: 29px;
     }
 
-    /* 3. X & Threads: 1600 x 900 */
-    #posterCard.size-x {
+    .poster-card.size-x {
       width: 1600px;
       height: 900px;
       padding: 52px 64px;
@@ -170,35 +157,34 @@
       gap: 52px;
       align-items: stretch;
     }
-    #posterCard.size-x .x-left {
+    .poster-card.size-x .x-left {
       width: 670px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
     }
-    #posterCard.size-x .x-right {
+    .poster-card.size-x .x-right {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-    #posterCard.size-x .image-box {
+    .poster-card.size-x .image-box {
       flex: 1;
       height: 100%;
       margin: 0;
     }
-    #posterCard.size-x .card-title {
+    .poster-card.size-x .card-title {
       font-size: 58px;
     }
-    #posterCard.size-x .card-desc {
+    .poster-card.size-x .card-desc {
       font-size: 28px;
       margin-bottom: 18px;
     }
-    #posterCard.size-x .card-bullets {
+    .poster-card.size-x .card-bullets {
       font-size: 25px;
     }
 
-    /* Card Internal Elements */
     .card-top-bar {
       display: flex;
       justify-content: space-between;
@@ -210,7 +196,6 @@
       text-transform: uppercase;
     }
 
-    /* Multi-Photo Collage Container */
     .image-box {
       width: 100%;
       background-color: var(--card-box);
@@ -347,7 +332,6 @@
       font-size: 30px;
     }
 
-    /* Hashtags inside card */
     .card-tags {
       font-size: 22px;
       font-weight: 600;
@@ -389,7 +373,6 @@
       gap: 12px;
     }
 
-    /* Action Download Bar */
     .action-bar {
       display: flex;
       gap: 8px;
@@ -433,7 +416,6 @@
       gap: 5px;
     }
 
-    /* Control Panel */
     .controls-panel {
       background: var(--panel-dark);
       border: 1px solid var(--border-dark);
@@ -521,7 +503,6 @@
       margin-left: auto;
     }
 
-    /* Thumbnail Strip */
     .thumb-strip {
       display: flex;
       gap: 8px;
@@ -569,7 +550,6 @@
       cursor: pointer;
     }
 
-    /* AI Copywriter Box */
     .ai-box {
       background: #17241c;
       border: 1px solid #2e4a38;
@@ -672,51 +652,59 @@
       color: var(--text-muted);
       cursor: pointer;
     }
+
+    /* Hidden Off-Screen Clean Export Stage */
+    #exportSandbox {
+      position: fixed;
+      left: -9999px;
+      top: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+    #exportSandbox .poster-card {
+      transform: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
   </style>
 </head>
 <body>
 
   <div class="app-container">
-    <!-- Header -->
     <div class="header">
       <h1 id="headerTitle">Template Affiliate • 1080×1350</h1>
       <p>Unggah foto produk & screenshot Shopee sekali, kunci teksnya agar 100% konsisten, lalu unduh untuk semua ukuran platform.</p>
     </div>
 
-    <!-- Platform Size Switcher -->
     <div class="size-tabs">
-      <button class="size-btn active" data-size="ig" data-w="1080" data-h="1350" data-label="1080×1350">
+      <button type="button" class="size-btn active" data-size="ig" data-w="1080" data-h="1350" data-label="1080×1350">
         <strong>IG & Facebook</strong>
         <span>1080 × 1350</span>
       </button>
-      <button class="size-btn" data-size="tiktok" data-w="1080" data-h="1920" data-label="1080×1920">
+      <button type="button" class="size-btn" data-size="tiktok" data-w="1080" data-h="1920" data-label="1080×1920">
         <strong>TikTok / Story</strong>
         <span>1080 × 1920</span>
       </button>
-      <button class="size-btn" data-size="x" data-w="1600" data-h="900" data-label="1600×900">
+      <button type="button" class="size-btn" data-size="x" data-w="1600" data-h="900" data-label="1600×900">
         <strong>X & Threads</strong>
         <span>1600 × 900</span>
       </button>
     </div>
 
-    <!-- Live Scaled Poster Preview -->
     <div class="preview-stage" id="previewStage">
-      <div id="posterCard" class="size-ig"></div>
+      <div id="posterCard" class="poster-card size-ig"></div>
     </div>
 
-    <!-- Download & Copy Caption Buttons -->
     <div class="action-bar">
-      <button class="btn-download" id="downloadBtn">
+      <button type="button" class="btn-download" id="downloadBtn">
         💾 Unduh PNG (<span id="btnSizeText">1080×1350</span>)
       </button>
-      <button class="btn-copy-caption" id="copyCaptionBtn" type="button">
+      <button type="button" class="btn-copy-caption" id="copyCaptionBtn">
         📋 Salin Caption
       </button>
     </div>
 
-    <!-- Editor Controls -->
     <div class="controls-panel">
-      <!-- Upload Multi-Foto Produk -->
       <div class="control-group">
         <label>1. Foto produk untuk poster (bisa pilih lebih dari 1 foto)</label>
         <div class="file-upload-box">
@@ -730,7 +718,6 @@
         </div>
       </div>
 
-      <!-- AI Copywriter & Screenshot Reader Box -->
       <div class="ai-box">
         <div class="ai-header">
           <span>✨ Copywriter Otomatis (Konsisten)</span>
@@ -741,7 +728,6 @@
 
         <input type="password" id="geminiApiKey" placeholder="Tempel Gemini API Key kamu di sini (tersimpan di browser)" />
 
-        <!-- Upload Screenshot Shopee -->
         <div class="ss-upload-row">
           <input type="file" id="screenshotInput" accept="image/*" multiple style="display: none;" />
           <button type="button" class="btn-ss-pick" id="pickSsBtn">📄 Upload Screenshot Shopee</button>
@@ -753,14 +739,13 @@
           <button class="btn-ai" id="generateAiBtn" type="button">
             ✍️ Generate Teks
           </button>
-          <button class="btn-lock" id="lockTextBtn" type="button" title="Kunci teks agar tidak berubah saat ganti ukuran">
+          <button class="btn-lock" id="lockTextBtn" type="button">
             🔓 Kunci Teks
           </button>
         </div>
         <div class="ai-status" id="aiStatus"></div>
       </div>
 
-      <!-- Zoom & Kecerahan -->
       <div class="control-row">
         <div class="control-group">
           <label>Zoom foto</label>
@@ -772,7 +757,6 @@
         </div>
       </div>
 
-      <!-- Nomor & Kategori -->
       <div class="control-row">
         <div class="control-group">
           <label>Nomor</label>
@@ -784,31 +768,26 @@
         </div>
       </div>
 
-      <!-- Nama Produk -->
       <div class="control-group">
         <label>Nama produk</label>
         <input type="text" id="inputTitle" value="Ember Lipat Portable" />
       </div>
 
-      <!-- Deskripsi Singkat -->
       <div class="control-group">
         <label>Deskripsi singkat (hook)</label>
         <textarea id="inputDesc" rows="2">Nggak makan tempat di kamar mandi sempit, habis pakai tinggal lipat rata ke dinding.</textarea>
       </div>
 
-      <!-- Keunggulan -->
       <div class="control-group">
         <label>Keunggulan (pisahkan dengan |)</label>
         <input type="text" id="inputBullets" value="Silikon tebal lentur | Muat 3L–10L | Ada lubang gantung" />
       </div>
 
-      <!-- Tag Relevan -->
       <div class="control-group">
         <label>Tagar relevan produk (tampil di poster & caption)</label>
         <input type="text" id="inputTags" value="#barangrumah #perlengkapankos #emberlipat #shopeehaul" />
       </div>
 
-      <!-- Harga & Ajakan Beli -->
       <div class="control-row">
         <div class="control-group">
           <label>Harga (tulis "Mulai Rp..." jika bervarian)</label>
@@ -820,7 +799,6 @@
         </div>
       </div>
 
-      <!-- Nama Akun -->
       <div class="control-group">
         <label>Nama akun</label>
         <input type="text" id="inputBrand" value="CEKDULU.CHECKOUT" />
@@ -828,211 +806,218 @@
     </div>
   </div>
 
+  <!-- Off-screen sandbox for 100% clean PNG export -->
+  <div id="exportSandbox"></div>
+
   <script>
-    // State
-    let currentSize = "ig";
-    let currentWidth = 1080;
-    let currentHeight = 1350;
-    let uploadedImages = [];
-    let screenshotImages = [];
-    let isTextLocked = false;
-    let hasGeneratedForCurrentProduct = false;
+    document.addEventListener("DOMContentLoaded", () => {
+      let currentSize = "ig";
+      let currentWidth = 1080;
+      let currentHeight = 1350;
+      let uploadedImages = [];
+      let screenshotImages = [];
+      let isTextLocked = false;
+      let hasGeneratedForCurrentProduct = false;
 
-    // DOM Elements
-    const posterCard = document.getElementById("posterCard");
-    const previewStage = document.getElementById("previewStage");
-    const headerTitle = document.getElementById("headerTitle");
-    const btnSizeText = document.getElementById("btnSizeText");
-    const downloadBtn = document.getElementById("downloadBtn");
-    const copyCaptionBtn = document.getElementById("copyCaptionBtn");
+      const posterCard = document.getElementById("posterCard");
+      const previewStage = document.getElementById("previewStage");
+      const exportSandbox = document.getElementById("exportSandbox");
+      const headerTitle = document.getElementById("headerTitle");
+      const btnSizeText = document.getElementById("btnSizeText");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const copyCaptionBtn = document.getElementById("copyCaptionBtn");
 
-    const imageInput = document.getElementById("imageInput");
-    const pickFilesBtn = document.getElementById("pickFilesBtn");
-    const clearFilesBtn = document.getElementById("clearFilesBtn");
-    const photoCountBadge = document.getElementById("photoCountBadge");
-    const thumbStrip = document.getElementById("thumbStrip");
+      const imageInput = document.getElementById("imageInput");
+      const pickFilesBtn = document.getElementById("pickFilesBtn");
+      const clearFilesBtn = document.getElementById("clearFilesBtn");
+      const photoCountBadge = document.getElementById("photoCountBadge");
+      const thumbStrip = document.getElementById("thumbStrip");
 
-    const screenshotInput = document.getElementById("screenshotInput");
-    const pickSsBtn = document.getElementById("pickSsBtn");
-    const clearSsBtn = document.getElementById("clearSsBtn");
-    const ssInfoText = document.getElementById("ssInfoText");
+      const screenshotInput = document.getElementById("screenshotInput");
+      const pickSsBtn = document.getElementById("pickSsBtn");
+      const clearSsBtn = document.getElementById("clearSsBtn");
+      const ssInfoText = document.getElementById("ssInfoText");
 
-    const zoomRange = document.getElementById("zoomRange");
-    const brightnessRange = document.getElementById("brightnessRange");
+      const zoomRange = document.getElementById("zoomRange");
+      const brightnessRange = document.getElementById("brightnessRange");
 
-    const inputNumber = document.getElementById("inputNumber");
-    const inputCategory = document.getElementById("inputCategory");
-    const inputTitle = document.getElementById("inputTitle");
-    const inputDesc = document.getElementById("inputDesc");
-    const inputBullets = document.getElementById("inputBullets");
-    const inputTags = document.getElementById("inputTags");
-    const inputPrice = document.getElementById("inputPrice");
-    const inputCta = document.getElementById("inputCta");
-    const inputBrand = document.getElementById("inputBrand");
+      const inputNumber = document.getElementById("inputNumber");
+      const inputCategory = document.getElementById("inputCategory");
+      const inputTitle = document.getElementById("inputTitle");
+      const inputDesc = document.getElementById("inputDesc");
+      const inputBullets = document.getElementById("inputBullets");
+      const inputTags = document.getElementById("inputTags");
+      const inputPrice = document.getElementById("inputPrice");
+      const inputCta = document.getElementById("inputCta");
+      const inputBrand = document.getElementById("inputBrand");
 
-    const geminiApiKeyInput = document.getElementById("geminiApiKey");
-    const generateAiBtn = document.getElementById("generateAiBtn");
-    const lockTextBtn = document.getElementById("lockTextBtn");
-    const autoGenOnUpload = document.getElementById("autoGenOnUpload");
-    const aiStatus = document.getElementById("aiStatus");
+      const geminiApiKeyInput = document.getElementById("geminiApiKey");
+      const generateAiBtn = document.getElementById("generateAiBtn");
+      const lockTextBtn = document.getElementById("lockTextBtn");
+      const autoGenOnUpload = document.getElementById("autoGenOnUpload");
+      const aiStatus = document.getElementById("aiStatus");
 
-    // Load saved API key
-    const savedKey = localStorage.getItem("cekdulu_gemini_api_key");
-    if (savedKey) geminiApiKeyInput.value = savedKey;
+      const savedKey = localStorage.getItem("cekdulu_gemini_api_key");
+      if (savedKey) geminiApiKeyInput.value = savedKey;
 
-    geminiApiKeyInput.addEventListener("input", () => {
-      localStorage.setItem("cekdulu_gemini_api_key", geminiApiKeyInput.value.trim());
-    });
-
-    // Lock / Unlock Text State
-    function setTextLock(locked) {
-      isTextLocked = locked;
-      if (isTextLocked) {
-        lockTextBtn.classList.add("locked");
-        lockTextBtn.textContent = "🔒 Teks Terkunci";
-      } else {
-        lockTextBtn.classList.remove("locked");
-        lockTextBtn.textContent = "🔓 Kunci Teks";
-      }
-    }
-
-    lockTextBtn.addEventListener("click", () => {
-      setTextLock(!isTextLocked);
-      showStatus(
-        isTextLocked
-          ? "🔒 Teks dikunci! Pindah ukuran IG / TikTok / X tidak akan mengubah teks."
-          : "🔓 Kunci dibuka. Kamu bisa generate ulang teks baru.",
-        isTextLocked ? "#fcd34d" : "#8ee0a3"
-      );
-    });
-
-    // Build Collage HTML for Poster
-    function buildImageCollageHtml() {
-      const count = uploadedImages.length;
-      if (count === 0) {
-        return `<div class="image-placeholder">Unggah 1 atau beberapa foto produk</div>`;
-      }
-
-      const zoom = zoomRange.value;
-      const brightness = brightnessRange.value;
-      const displayCount = Math.min(count, 4);
-      const gridClass = `count-${displayCount}`;
-
-      let slotsHtml = "";
-      for (let i = 0; i < displayCount; i++) {
-        const imgObj = uploadedImages[i];
-        const extraBadge = (i === 3 && count > 4)
-          ? `<div class="more-overlay">+${count - 4}</div>`
-          : "";
-        slotsHtml += `
-          <div class="photo-slot">
-            <img src="${imgObj.dataUrl}" style="transform: scale(${zoom}); filter: brightness(${brightness});" alt="Produk ${i + 1}" />
-            ${extraBadge}
-          </div>
-        `;
-      }
-
-      return `<div class="photo-grid ${gridClass}">${slotsHtml}</div>`;
-    }
-
-    function renderThumbnails() {
-      const count = uploadedImages.length;
-      photoCountBadge.textContent = `${count} foto dipilih`;
-      clearFilesBtn.style.display = count > 0 ? "inline-block" : "none";
-
-      thumbStrip.innerHTML = uploadedImages
-        .map((img, idx) => `
-          <div class="thumb-item">
-            <img src="${img.dataUrl}" alt="Thumb ${idx + 1}" />
-            <button type="button" class="thumb-remove" data-idx="${idx}" title="Hapus foto">×</button>
-          </div>
-        `)
-        .join("");
-
-      thumbStrip.querySelectorAll(".thumb-remove").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const removeIdx = parseInt(btn.dataset.idx, 10);
-          uploadedImages.splice(removeIdx, 1);
-          renderThumbnails();
-          renderPoster();
-        });
+      geminiApiKeyInput.addEventListener("input", () => {
+        localStorage.setItem("cekdulu_gemini_api_key", geminiApiKeyInput.value.trim());
       });
-    }
 
-    function updateSsUi() {
-      const count = screenshotImages.length;
-      if (count === 0) {
-        ssInfoText.textContent = "Wajib disarankan agar judul 100% akurat";
-        ssInfoText.style.color = "#96b09f";
-        clearSsBtn.style.display = "none";
-      } else {
-        ssInfoText.textContent = `${count} screenshot Shopee siap dibaca AI`;
-        ssInfoText.style.color = "#8ee0a3";
-        clearSsBtn.style.display = "inline-block";
-      }
-    }
-
-    function renderPoster() {
-      const brand = inputBrand.value || "CEKDULU.CHECKOUT";
-      const num = inputNumber.value || "No. 001";
-      const category = inputCategory.value || "Perlengkapan Rumah";
-      const title = inputTitle.value || "Nama Produk";
-      const desc = inputDesc.value || "";
-      const bulletsRaw = inputBullets.value || "";
-      const tagsRaw = inputTags.value.trim();
-      const priceText = inputPrice.value.trim();
-      const cta = inputCta.value || "Cek di Shopee →";
-
-      let priceLabel = "";
-      let priceMain = priceText;
-      if (priceText.toLowerCase().startsWith("mulai ")) {
-        priceLabel = "Mulai";
-        priceMain = priceText.substring(6).trim();
+      function setTextLock(locked) {
+        isTextLocked = locked;
+        if (isTextLocked) {
+          lockTextBtn.classList.add("locked");
+          lockTextBtn.textContent = "🔒 Teks Terkunci";
+        } else {
+          lockTextBtn.classList.remove("locked");
+          lockTextBtn.textContent = "🔓 Kunci Teks";
+        }
       }
 
-      const bulletsHtml = bulletsRaw
-        .split("|")
-        .map(b => b.trim())
-        .filter(Boolean)
-        .map(b => `<span>${escapeHtml(b)}</span>`)
-        .join("");
+      lockTextBtn.addEventListener("click", () => {
+        setTextLock(!isTextLocked);
+        showStatus(
+          isTextLocked
+            ? "🔒 Teks dikunci! Pindah ukuran IG / TikTok / X tidak akan mengubah teks."
+            : "🔓 Kunci dibuka. Kamu bisa generate ulang teks baru.",
+          isTextLocked ? "#fcd34d" : "#8ee0a3"
+        );
+      });
 
-      const tagsHtml = tagsRaw
-        ? `<div class="card-tags">${escapeHtml(tagsRaw)}</div>`
-        : "";
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
 
-      const imageHtml = buildImageCollageHtml();
+      function buildImageCollageHtml() {
+        const count = uploadedImages.length;
+        if (count === 0) {
+          return `<div class="image-placeholder">Unggah 1 atau beberapa foto produk</div>`;
+        }
 
-      posterCard.className = `size-${currentSize}`;
+        const zoom = zoomRange.value;
+        const brightness = brightnessRange.value;
+        const displayCount = Math.min(count, 4);
+        const gridClass = `count-${displayCount}`;
 
-      if (currentSize === "x") {
-        posterCard.innerHTML = `
-          <div class="x-left">
-            <div class="image-box">${imageHtml}</div>
-          </div>
-          <div class="x-right">
-            <div class="card-top-bar">
-              <span>${escapeHtml(brand)}</span>
-              <span>${escapeHtml(num)}</span>
+        let slotsHtml = "";
+        for (let i = 0; i < displayCount; i++) {
+          const imgObj = uploadedImages[i];
+          const extraBadge = (i === 3 && count > 4)
+            ? `<div class="more-overlay">+${count - 4}</div>`
+            : "";
+          slotsHtml += `
+            <div class="photo-slot">
+              <img src="${imgObj.dataUrl}" style="transform: scale(${zoom}); filter: brightness(${brightness});" alt="Produk ${i + 1}" />
+              ${extraBadge}
             </div>
-            <div class="card-body">
-              <div class="card-category"><i class="dot"></i>${escapeHtml(category)}</div>
-              <div class="card-title">${escapeHtml(title)}</div>
-              <div class="card-desc">${escapeHtml(desc)}</div>
-              <div class="card-bullets">${bulletsHtml}</div>
-              ${tagsHtml}
+          `;
+        }
+
+        return `<div class="photo-grid ${gridClass}">${slotsHtml}</div>`;
+      }
+
+      function renderThumbnails() {
+        const count = uploadedImages.length;
+        photoCountBadge.textContent = `${count} foto dipilih`;
+        clearFilesBtn.style.display = count > 0 ? "inline-block" : "none";
+
+        thumbStrip.innerHTML = uploadedImages
+          .map((img, idx) => `
+            <div class="thumb-item">
+              <img src="${img.dataUrl}" alt="Thumb ${idx + 1}" />
+              <button type="button" class="thumb-remove" data-idx="${idx}" title="Hapus foto">×</button>
             </div>
-            <div class="card-footer">
-              <div class="price-block">
-                ${priceLabel ? `<div class="price-label">${escapeHtml(priceLabel)}</div>` : ""}
-                <div class="price-value">${escapeHtml(priceMain)}</div>
+          `)
+          .join("");
+
+        thumbStrip.querySelectorAll(".thumb-remove").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const removeIdx = parseInt(btn.dataset.idx, 10);
+            uploadedImages.splice(removeIdx, 1);
+            renderThumbnails();
+            renderPoster();
+          });
+        });
+      }
+
+      function updateSsUi() {
+        const count = screenshotImages.length;
+        if (count === 0) {
+          ssInfoText.textContent = "Wajib disarankan agar judul 100% akurat";
+          ssInfoText.style.color = "#96b09f";
+          clearSsBtn.style.display = "none";
+        } else {
+          ssInfoText.textContent = `${count} screenshot Shopee siap dibaca AI`;
+          ssInfoText.style.color = "#8ee0a3";
+          clearSsBtn.style.display = "inline-block";
+        }
+      }
+
+      function buildCardInnerHtml() {
+        const brand = inputBrand.value || "CEKDULU.CHECKOUT";
+        const num = inputNumber.value || "No. 001";
+        const category = inputCategory.value || "Perlengkapan Rumah";
+        const title = inputTitle.value || "Nama Produk";
+        const desc = inputDesc.value || "";
+        const bulletsRaw = inputBullets.value || "";
+        const tagsRaw = inputTags.value.trim();
+        const priceText = inputPrice.value.trim();
+        const cta = inputCta.value || "Cek di Shopee →";
+
+        let priceLabel = "";
+        let priceMain = priceText;
+        if (priceText.toLowerCase().startsWith("mulai ")) {
+          priceLabel = "Mulai";
+          priceMain = priceText.substring(6).trim();
+        }
+
+        const bulletsHtml = bulletsRaw
+          .split("|")
+          .map(b => b.trim())
+          .filter(Boolean)
+          .map(b => `<span>${escapeHtml(b)}</span>`)
+          .join("");
+
+        const tagsHtml = tagsRaw
+          ? `<div class="card-tags">${escapeHtml(tagsRaw)}</div>`
+          : "";
+
+        const imageHtml = buildImageCollageHtml();
+
+        if (currentSize === "x") {
+          return `
+            <div class="x-left">
+              <div class="image-box">${imageHtml}</div>
+            </div>
+            <div class="x-right">
+              <div class="card-top-bar">
+                <span>${escapeHtml(brand)}</span>
+                <span>${escapeHtml(num)}</span>
               </div>
-              <div class="cta-pill">${escapeHtml(cta)}</div>
+              <div class="card-body">
+                <div class="card-category"><i class="dot"></i>${escapeHtml(category)}</div>
+                <div class="card-title">${escapeHtml(title)}</div>
+                <div class="card-desc">${escapeHtml(desc)}</div>
+                <div class="card-bullets">${bulletsHtml}</div>
+                ${tagsHtml}
+              </div>
+              <div class="card-footer">
+                <div class="price-block">
+                  ${priceLabel ? `<div class="price-label">${escapeHtml(priceLabel)}</div>` : ""}
+                  <div class="price-value">${escapeHtml(priceMain)}</div>
+                </div>
+                <div class="cta-pill">${escapeHtml(cta)}</div>
+              </div>
             </div>
-          </div>
-        `;
-      } else {
-        posterCard.innerHTML = `
+          `;
+        }
+
+        return `
           <div class="card-top-bar">
             <span>${escapeHtml(brand)}</span>
             <span>${escapeHtml(num)}</span>
@@ -1055,139 +1040,127 @@
         `;
       }
 
-      scalePreview();
-    }
+      function renderPoster() {
+        posterCard.className = `poster-card size-${currentSize}`;
+        posterCard.innerHTML = buildCardInnerHtml();
+        scalePreview();
+      }
 
-    function scalePreview() {
-      const containerWidth = previewStage.clientWidth;
-      const scale = Math.min(containerWidth / currentWidth, 1);
-      posterCard.style.transform = `scale(${scale})`;
-      previewStage.style.height = `${currentHeight * scale}px`;
-    }
+      function scalePreview() {
+        const containerWidth = previewStage.clientWidth || 500;
+        const scale = Math.min(containerWidth / currentWidth, 1);
+        posterCard.style.transform = `scale(${scale})`;
+        previewStage.style.height = `${currentHeight * scale}px`;
+      }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-    }
+      document.querySelectorAll(".size-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentSize = btn.dataset.size;
+          currentWidth = parseInt(btn.dataset.w, 10);
+          currentHeight = parseInt(btn.dataset.h, 10);
+          headerTitle.textContent = `Template Affiliate • ${btn.dataset.label}`;
+          btnSizeText.textContent = btn.dataset.label;
+          renderPoster();
+        });
+      });
 
-    // Size Switcher Events (Only changes layout dimensions, NEVER changes text!)
-    document.querySelectorAll(".size-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentSize = btn.dataset.size;
-        currentWidth = parseInt(btn.dataset.w, 10);
-        currentHeight = parseInt(btn.dataset.h, 10);
-        headerTitle.textContent = `Template Affiliate • ${btn.dataset.label}`;
-        btnSizeText.textContent = btn.dataset.label;
+      [
+        zoomRange, brightnessRange, inputNumber, inputCategory,
+        inputTitle, inputDesc, inputBullets, inputTags, inputPrice, inputCta, inputBrand
+      ].forEach(el => el.addEventListener("input", renderPoster));
+
+      window.addEventListener("resize", scalePreview);
+
+      function readFilesAsDataUrls(fileList) {
+        return Promise.all(
+          Array.from(fileList).map(file => new Promise(resolve => {
+            const reader = new FileReader();
+            reader.onload = ev => resolve({
+              dataUrl: ev.target.result,
+              mimeType: file.type || "image/jpeg"
+            });
+            reader.readAsDataURL(file);
+          }))
+        );
+      }
+
+      pickFilesBtn.addEventListener("click", () => imageInput.click());
+      clearFilesBtn.addEventListener("click", () => {
+        uploadedImages = [];
+        imageInput.value = "";
+        hasGeneratedForCurrentProduct = false;
+        setTextLock(false);
+        renderThumbnails();
         renderPoster();
       });
-    });
 
-    // Live Form Listeners
-    [
-      zoomRange, brightnessRange, inputNumber, inputCategory,
-      inputTitle, inputDesc, inputBullets, inputTags, inputPrice, inputCta, inputBrand
-    ].forEach(el => el.addEventListener("input", renderPoster));
+      imageInput.addEventListener("change", async (e) => {
+        if (!e.target.files || e.target.files.length === 0) return;
+        const newImgs = await readFilesAsDataUrls(e.target.files);
+        uploadedImages = uploadedImages.concat(newImgs);
+        imageInput.value = "";
+        renderThumbnails();
+        renderPoster();
 
-    window.addEventListener("resize", scalePreview);
+        if (autoGenOnUpload.checked && geminiApiKeyInput.value.trim() && !isTextLocked && !hasGeneratedForCurrentProduct) {
+          await generateWithGemini(false);
+        }
+      });
 
-    function readFilesAsDataUrls(fileList) {
-      return Promise.all(
-        Array.from(fileList).map(file => new Promise(resolve => {
-          const reader = new FileReader();
-          reader.onload = ev => resolve({
-            dataUrl: ev.target.result,
-            mimeType: file.type || "image/jpeg"
-          });
-          reader.readAsDataURL(file);
-        }))
-      );
-    }
+      pickSsBtn.addEventListener("click", () => screenshotInput.click());
+      clearSsBtn.addEventListener("click", () => {
+        screenshotImages = [];
+        screenshotInput.value = "";
+        updateSsUi();
+      });
 
-    // Poster Product Photos Upload
-    pickFilesBtn.addEventListener("click", () => imageInput.click());
-    clearFilesBtn.addEventListener("click", () => {
-      uploadedImages = [];
-      imageInput.value = "";
-      hasGeneratedForCurrentProduct = false;
-      setTextLock(false);
-      renderThumbnails();
-      renderPoster();
-    });
+      screenshotInput.addEventListener("change", async (e) => {
+        if (!e.target.files || e.target.files.length === 0) return;
+        const newSs = await readFilesAsDataUrls(e.target.files);
+        screenshotImages = screenshotImages.concat(newSs);
+        screenshotInput.value = "";
+        updateSsUi();
 
-    imageInput.addEventListener("change", async (e) => {
-      if (!e.target.files || e.target.files.length === 0) return;
-      const newImgs = await readFilesAsDataUrls(e.target.files);
-      uploadedImages = uploadedImages.concat(newImgs);
-      imageInput.value = "";
-      renderThumbnails();
-      renderPoster();
+        if (autoGenOnUpload.checked && geminiApiKeyInput.value.trim() && !isTextLocked) {
+          await generateWithGemini(false);
+        }
+      });
 
-      // Auto-generate ONLY if not locked and not yet generated for this product batch
-      if (autoGenOnUpload.checked && geminiApiKeyInput.value.trim() && !isTextLocked && !hasGeneratedForCurrentProduct) {
-        await generateWithGemini(false);
-      }
-    });
+      async function generateWithGemini(isManualClick = true) {
+        if (isTextLocked && !isManualClick) return;
+        if (isTextLocked && isManualClick) {
+          showStatus("⚠️ Teks sedang dikunci (🔒). Klik tombol kunci dulu jika ingin mengganti teks.", "#fbbf24");
+          return;
+        }
 
-    // Screenshot Shopee Upload
-    pickSsBtn.addEventListener("click", () => screenshotInput.click());
-    clearSsBtn.addEventListener("click", () => {
-      screenshotImages = [];
-      screenshotInput.value = "";
-      updateSsUi();
-    });
+        const apiKey = geminiApiKeyInput.value.trim();
+        if (!apiKey) {
+          showStatus("⚠️ Masukkan Gemini API Key terlebih dahulu.", "#fbbf24");
+          return;
+        }
 
-    screenshotInput.addEventListener("change", async (e) => {
-      if (!e.target.files || e.target.files.length === 0) return;
-      const newSs = await readFilesAsDataUrls(e.target.files);
-      screenshotImages = screenshotImages.concat(newSs);
-      screenshotInput.value = "";
-      updateSsUi();
+        const totalSourceImages = screenshotImages.length + uploadedImages.length;
+        if (totalSourceImages === 0) {
+          showStatus("⚠️ Unggah foto produk atau screenshot halaman Shopee terlebih dahulu.", "#fbbf24");
+          return;
+        }
 
-      // Screenshot contains exact Shopee title, so allow refreshing once when screenshot is added unless manually locked
-      if (autoGenOnUpload.checked && geminiApiKeyInput.value.trim() && !isTextLocked) {
-        await generateWithGemini(false);
-      }
-    });
+        generateAiBtn.disabled = true;
 
-    // Gemini API Deterministic Copywriter
-    async function generateWithGemini(isManualClick = true) {
-      if (isTextLocked && !isManualClick) return;
-      if (isTextLocked && isManualClick) {
-        showStatus("⚠️ Teks sedang dikunci (🔒). Klik tombol kunci dulu jika ingin mengganti teks.", "#fbbf24");
-        return;
-      }
-
-      const apiKey = geminiApiKeyInput.value.trim();
-      if (!apiKey) {
-        showStatus("⚠️ Masukkan Gemini API Key terlebih dahulu.", "#fbbf24");
-        return;
-      }
-
-      const totalSourceImages = screenshotImages.length + uploadedImages.length;
-      if (totalSourceImages === 0) {
-        showStatus("⚠️ Unggah foto produk atau screenshot halaman Shopee terlebih dahulu.", "#fbbf24");
-        return;
-      }
-
-      generateAiBtn.disabled = true;
-
-      try {
-        const promptText = `Kamu adalah copywriter katalog affiliate Indonesia "cekdulu.checkout" (slogan: "Murah itu wajib, bagus itu harus").
+        try {
+          const promptText = `Kamu adalah copywriter katalog affiliate Indonesia "cekdulu.checkout" (slogan: "Murah itu wajib, bagus itu harus").
 
 TUGAS UTAMA:
 Baca semua gambar yang dilampirkan. Jika ada screenshot halaman produk Shopee, WAJIB ikuti judul asli produk pada screenshot tersebut (jangan menebak-nebak fungsi yang berbeda dari judul Shopee-nya). Sarikan menjadi teks kartu katalog yang konsisten, jujur, tajam, dan natural.
 
 ATURAN WAJIB:
-1. KONSISTENSI NAMA PRODUK: Gunakan nama asli produk sesuai screenshot Shopee (bersihkan dari kata spam SEO seperti "COD / Bisa Bayar di Tempat / Termurah"). Jika tidak ada screenshot, sebutkan nama barang secara literal dan paling umum (contoh: "Nampan Buah Kaca 27 cm", jangan diubah-ubah menjadi fungsi lain).
+1. KONSISTENSI NAMA PRODUK: Gunakan nama asli produk sesuai screenshot Shopee (bersihkan dari kata spam SEO seperti "COD / Bisa Bayar di Tempat / Termurah"). Jika tidak ada screenshot, sebutkan nama barang secara literal dan paling umum (contoh: "Nampan Buah Kaca 27 cm").
 2. ANTI-AI: Dilarang keras memakai kata klise AI ("solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya"). Pakai bahasa sehari-hari yang membumi.
 3. HOOK DESKRIPSI: 1 kalimat singkat menyentuh manfaat nyata atau tampilan produk (maksimal 90 karakter).
 4. KEUNGGULAN: 3 fakta konkret (ukuran cm/liter, bahan, fitur fisik) dipisahkan tanda |.
-5. TAGAR RELEVAN: Buat 4-5 hashtag Bahasa Indonesia yang sangat relevan dengan produk dan kategorinya, huruf kecil semua, dipisah spasi (contoh: #nampanbuah #wadahsaji #perlengkapanrumah #estetikrumah #shopeehaul).
+5. TAGAR RELEVAN: Buat 4-5 hashtag Bahasa Indonesia yang sangat relevan dengan produk dan kategorinya, huruf kecil semua, dipisah spasi.
 6. HARGA: Ekstrak harga terendah dari screenshot lalu bulatkan rapi ke ribuan terdekat. Jika ada variasi harga tulis "Mulai RpXX.XXX", jika tunggal tulis "RpXX.XXX", jika tidak ada info harga isi "".
 
 Keluarkan HANYA JSON murni tanpa markdown:
@@ -1200,168 +1173,154 @@ Keluarkan HANYA JSON murni tanpa markdown:
   "harga": "Mulai RpXX.XXX atau RpXX.XXX atau kosong"
 }`;
 
-        const combinedImages = [...screenshotImages, ...uploadedImages].slice(0, 5);
-        const imageParts = combinedImages.map(img => ({
-          inline_data: {
-            mime_type: img.mimeType,
-            data: img.dataUrl.split(",")[1]
-          }
-        }));
-
-        const modelsToTry = [
-          "gemini-3.8-flash",
-          "gemini-3.5-flash-lite"
-        ];
-
-        let response = null;
-        let lastErrorMsg = "";
-
-        for (const modelName of modelsToTry) {
-          showStatus(`⏳ Menganalisis dengan ${modelName}...`, "#8ee0a3");
-          response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{
-                  parts: [
-                    { text: promptText },
-                    ...imageParts
-                  ]
-                }],
-                generationConfig: {
-                  response_mime_type: "application/json",
-                  temperature: 0.1
-                }
-              })
+          const combinedImages = [...screenshotImages, ...uploadedImages].slice(0, 5);
+          const imageParts = combinedImages.map(img => ({
+            inline_data: {
+              mime_type: img.mimeType,
+              data: img.dataUrl.split(",")[1]
             }
-          );
+          }));
 
-          if (response.ok) break;
+          const modelsToTry = [
+            "gemini-3.8-flash",
+            "gemini-3.5-flash-lite"
+          ];
 
-          const errData = await response.json().catch(() => ({}));
-          lastErrorMsg = errData.error?.message || `HTTP ${response.status}`;
+          let response = null;
+          let lastErrorMsg = "";
+
+          for (const modelName of modelsToTry) {
+            showStatus(`⏳ Menganalisis dengan ${modelName}...`, "#8ee0a3");
+            response = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  contents: [{
+                    parts: [
+                      { text: promptText },
+                      ...imageParts
+                    ]
+                  }],
+                  generationConfig: {
+                    response_mime_type: "application/json",
+                    temperature: 0.1
+                  }
+                })
+              }
+            );
+
+            if (response.ok) break;
+
+            const errData = await response.json().catch(() => ({}));
+            lastErrorMsg = errData.error?.message || `HTTP ${response.status}`;
+          }
+
+          if (!response || !response.ok) {
+            throw new Error(lastErrorMsg || "Server AI sedang sibuk, coba beberapa detik lagi.");
+          }
+
+          const result = await response.json();
+          const rawText = result.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+          const parsed = JSON.parse(rawText);
+
+          if (parsed.kategori) inputCategory.value = parsed.kategori;
+          if (parsed.nama_produk) inputTitle.value = parsed.nama_produk;
+          if (parsed.deskripsi) inputDesc.value = parsed.deskripsi;
+          if (parsed.keunggulan) inputBullets.value = parsed.keunggulan;
+          if (parsed.tagar) inputTags.value = parsed.tagar;
+          if (parsed.harga && parsed.harga.trim() !== "") inputPrice.value = parsed.harga.trim();
+
+          hasGeneratedForCurrentProduct = true;
+          setTextLock(true);
+          renderPoster();
+          showStatus("✅ Teks & tagar diracik lalu dikunci otomatis (🔒) agar konsisten di semua ukuran!", "#8ee0a3");
+        } catch (err) {
+          console.error(err);
+          showStatus(`❌ Gagal generate: ${err.message}`, "#f87171");
+        } finally {
+          generateAiBtn.disabled = false;
         }
+      }
 
-        if (!response || !response.ok) {
-          throw new Error(lastErrorMsg || "Server AI sedang sibuk, coba beberapa detik lagi.");
+      generateAiBtn.addEventListener("click", () => generateWithGemini(true));
+
+      function showStatus(msg, color) {
+        aiStatus.style.display = "block";
+        aiStatus.style.color = color;
+        aiStatus.textContent = msg;
+      }
+
+      copyCaptionBtn.addEventListener("click", async () => {
+        const bulletsList = inputBullets.value
+          .split("|")
+          .map(b => b.trim())
+          .filter(Boolean)
+          .map(b => `• ${b}`)
+          .join("\n");
+
+        const captionText = `${inputNumber.value} — ${inputTitle.value}\n\n${inputDesc.value}\n\n${bulletsList}\n\nHarga: ${inputPrice.value}\nLink produk ada di bio / katalog cekdulu.checkout 🛒\n\n${inputTags.value}`;
+
+        try {
+          await navigator.clipboard.writeText(captionText);
+          const prev = copyCaptionBtn.textContent;
+          copyCaptionBtn.textContent = "✅ Tersalin!";
+          setTimeout(() => { copyCaptionBtn.textContent = prev; }, 2000);
+        } catch (err) {
+          alert("Gagal menyalin caption: " + err.message);
         }
+      });
 
-        const result = await response.json();
-        const rawText = result.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-        const parsed = JSON.parse(rawText);
+      // Clean Off-Screen PNG Export (Zero shadow/gray border artifacts)
+      downloadBtn.addEventListener("click", async () => {
+        downloadBtn.disabled = true;
+        const originalHtml = downloadBtn.innerHTML;
+        downloadBtn.innerHTML = "⏳ Menyimpan PNG bersih...";
 
-        if (parsed.kategori) inputCategory.value = parsed.kategori;
-        if (parsed.nama_produk) inputTitle.value = parsed.nama_produk;
-        if (parsed.deskripsi) inputDesc.value = parsed.deskripsi;
-        if (parsed.keunggulan) inputBullets.value = parsed.keunggulan;
-        if (parsed.tagar) inputTags.value = parsed.tagar;
-        if (parsed.harga && parsed.harga.trim() !== "") inputPrice.value = parsed.harga.trim();
+        try {
+          const exportCard = document.createElement("div");
+          exportCard.className = `poster-card size-${currentSize}`;
+          exportCard.innerHTML = buildCardInnerHtml();
 
-        hasGeneratedForCurrentProduct = true;
-        setTextLock(true); // Auto-lock text after successful generation so it stays 100% consistent across IG/TikTok/X!
-        renderPoster();
-        showStatus("✅ Teks & tagar diracik lalu dikunci otomatis (🔒) agar konsisten di semua ukuran!", "#8ee0a3");
-      } catch (err) {
-        console.error(err);
-        showStatus(`❌ Gagal generate: ${err.message}`, "#f87171");
-      } finally {
-        generateAiBtn.disabled = false;
-      }
-    }
+          exportSandbox.innerHTML = "";
+          exportSandbox.appendChild(exportCard);
 
-    generateAiBtn.addEventListener("click", () => generateWithGemini(true));
+          await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
-    function showStatus(msg, color) {
-      aiStatus.style.display = "block";
-      aiStatus.style.color = color;
-      aiStatus.textContent = msg;
-    }
+          const canvas = await html2canvas(exportCard, {
+            width: currentWidth,
+            height: currentHeight,
+            scale: 1,
+            useCORS: true,
+            backgroundColor: "#f7f4ec",
+            logging: false
+          });
 
-    // Copy Ready-to-Post Caption + Hashtags
-    copyCaptionBtn.addEventListener("click", async () => {
-      const bulletsList = inputBullets.value
-        .split("|")
-        .map(b => b.trim())
-        .filter(Boolean)
-        .map(b => `• ${b}`)
-        .join("\n");
+          exportSandbox.innerHTML = "";
 
-      const captionText = `${inputNumber.value} — ${inputTitle.value}\n\n${inputDesc.value}\n\n${bulletsList}\n\nHarga: ${inputPrice.value}\nLink produk ada di bio / katalog cekdulu.checkout 🛒\n\n${inputTags.value}`;
+          const cleanTitle = (inputTitle.value || "produk")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "");
+          const fileName = `${inputNumber.value.replace(/[^a-zA-Z0-9]/g, "") || "001"}-${cleanTitle}-${currentWidth}x${currentHeight}.png`;
 
-      try {
-        await navigator.clipboard.writeText(captionText);
-        const prev = copyCaptionBtn.textContent;
-        copyCaptionBtn.textContent = "✅ Tersalin!";
-        setTimeout(() => { copyCaptionBtn.textContent = prev; }, 2000);
-      } catch (err) {
-        alert("Gagal menyalin caption: " + err.message);
-      }
+          const link = document.createElement("a");
+          link.download = fileName;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+        } catch (err) {
+          alert("Gagal menyimpan gambar: " + err.message);
+        } finally {
+          downloadBtn.disabled = false;
+          downloadBtn.innerHTML = originalHtml;
+        }
+      });
+
+      renderThumbnails();
+      updateSsUi();
+      renderPoster();
     });
-
-    // Download Clean High-Resolution PNG (No dark border/shadow artifacts)
-    downloadBtn.addEventListener("click", async () => {
-      downloadBtn.disabled = true;
-      const originalHtml = downloadBtn.innerHTML;
-      downloadBtn.innerHTML = "⏳ Menyimpan PNG bersih...";
-
-      // Save current stage & card styles
-      const prevTransform = posterCard.style.transform;
-      const prevStageHeight = previewStage.style.height;
-      const prevStageOverflow = previewStage.style.overflow;
-
-      try {
-        // Reset scale and remove border-radius/shadow artifacts during capture
-        posterCard.classList.add("exporting");
-        posterCard.style.transform = "none";
-        previewStage.style.height = "auto";
-        previewStage.style.overflow = "visible";
-
-        // Wait 1 animation frame so browser finishes clean reflow
-        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-
-        const canvas = await html2canvas(posterCard, {
-          width: currentWidth,
-          height: currentHeight,
-          windowWidth: Math.max(document.documentElement.clientWidth, currentWidth + 100),
-          windowHeight: Math.max(document.documentElement.clientHeight, currentHeight + 100),
-          x: 0,
-          y: 0,
-          scrollX: 0,
-          scrollY: 0,
-          scale: 1,
-          useCORS: true,
-          backgroundColor: "#f7f4ec"
-        });
-
-        const cleanTitle = (inputTitle.value || "produk")
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, "");
-        const fileName = `${inputNumber.value.replace(/[^a-zA-Z0-9]/g, "") || "001"}-${cleanTitle}-${currentWidth}x${currentHeight}.png`;
-
-        const link = document.createElement("a");
-        link.download = fileName;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      } catch (err) {
-        alert("Gagal menyimpan gambar: " + err.message);
-      } finally {
-        // Restore preview scale & styling immediately
-        posterCard.classList.remove("exporting");
-        posterCard.style.transform = prevTransform;
-        previewStage.style.height = prevStageHeight;
-        previewStage.style.overflow = prevStageOverflow;
-        downloadBtn.disabled = false;
-        downloadBtn.innerHTML = originalHtml;
-      }
-    });
-
-    // Initial render
-    renderThumbnails();
-    updateSsUi();
-    renderPoster();
   </script>
 </body>
 </html>
