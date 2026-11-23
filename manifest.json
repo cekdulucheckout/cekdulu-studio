@@ -1,5 +1,5 @@
 {
-  "name": "CekDulu Studio",
+  "name": "cekdulu.checkout Studio",
   "short_name": "CekDulu Studio",
   "description": "Affiliate Content Generator untuk cekdulu.checkout",
   "start_url": "/cekdulu-studio/",
@@ -10,10 +10,16 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
