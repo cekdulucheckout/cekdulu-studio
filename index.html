@@ -253,11 +253,12 @@
     .photo-grid.count-1 .photo-slot {
       border-radius: 32px;
     }
-    .photo-slot img {
+    .photo-slot .photo-bg {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
     .more-overlay {
       position: absolute;
@@ -912,7 +913,7 @@
             : "";
           slotsHtml += `
             <div class="photo-slot">
-              <img src="${imgObj.dataUrl}" style="transform: scale(${zoom}); filter: brightness(${brightness});" alt="Produk ${i + 1}" />
+              <div class="photo-bg" style="background-image: url('${imgObj.dataUrl}'); transform: scale(${zoom}); filter: brightness(${brightness});"></div>
               ${extraBadge}
             </div>
           `;
