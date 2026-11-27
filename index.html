@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#141c17" />
   <link rel="icon" type="image/svg+xml" href="icon.svg" />
   <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -108,120 +109,69 @@
       padding: 4px 0;
     }
 
+    /* === EDITORIAL PINTEREST POSTER CARD === */
     .poster-card {
-      background-color: var(--card-cream);
+      background: #f7f4ec;
       color: var(--card-text);
-      border-radius: 32px;
+      padding: 0;
+      border-radius: 28px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       position: relative;
       overflow: hidden;
       transform-origin: top center;
       flex-shrink: 0;
     }
-
     .poster-card.size-ig {
       width: 1080px;
       height: 1350px;
-      padding: 60px 68px;
     }
-    .poster-card.size-ig .image-box {
-      height: 600px;
-      margin: 28px 0 32px 0;
-    }
-
     .poster-card.size-tiktok {
       width: 1080px;
       height: 1920px;
-      padding: 105px 72px 125px 72px;
     }
-    .poster-card.size-tiktok .image-box {
-      height: 840px;
-      margin: 40px 0 46px 0;
-    }
-    .poster-card.size-tiktok .card-title {
-      font-size: 70px;
-      margin-bottom: 22px;
-    }
-    .poster-card.size-tiktok .card-desc {
-      font-size: 33px;
-      margin-bottom: 26px;
-    }
-    .poster-card.size-tiktok .card-bullets {
-      font-size: 29px;
-    }
-
     .poster-card.size-x {
       width: 1600px;
       height: 900px;
-      padding: 52px 64px;
       flex-direction: row;
-      gap: 52px;
-      align-items: stretch;
-    }
-    .poster-card.size-x .x-left {
-      width: 670px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    .poster-card.size-x .x-right {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .poster-card.size-x .image-box {
-      flex: 1;
-      height: 100%;
-      margin: 0;
-    }
-    .poster-card.size-x .card-title {
-      font-size: 58px;
-    }
-    .poster-card.size-x .card-desc {
-      font-size: 28px;
-      margin-bottom: 18px;
-    }
-    .poster-card.size-x .card-bullets {
-      font-size: 25px;
     }
 
-    .card-top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      color: var(--card-sub);
-      text-transform: uppercase;
-    }
-
-    .image-box {
-      width: 100%;
-      background-color: var(--card-box);
-      border-radius: 32px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .ed-photo {
       position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #ebe5d5;
+      flex-shrink: 0;
     }
+    .size-ig .ed-photo {
+      height: 700px;
+    }
+    .size-tiktok .ed-photo {
+      height: 1080px;
+    }
+    .size-x .ed-photo {
+      width: 56%;
+      height: 100%;
+    }
+
     .image-placeholder {
+      width: 100%;
+      height: 100%;
       color: #8f8a7c;
       font-size: 28px;
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 20px;
+      padding: 24px;
     }
 
     .photo-grid {
       width: 100%;
       height: 100%;
       display: grid;
-      gap: 12px;
+      gap: 4px;
       background-color: var(--card-cream);
     }
     .photo-grid.count-1 {
@@ -251,10 +201,6 @@
       overflow: hidden;
       position: relative;
       background-color: var(--card-box);
-      border-radius: 22px;
-    }
-    .photo-grid.count-1 .photo-slot {
-      border-radius: 32px;
     }
     .photo-slot .photo-bg {
       width: 100%;
@@ -275,108 +221,166 @@
       justify-content: center;
     }
 
-    .card-body {
+    .ed-sticker {
+      position: absolute;
+      top: 36px;
+      right: 36px;
+      background: #1c2920;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      padding: 16px 26px;
+      border-radius: 999px;
+      transform: rotate(4deg);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+      z-index: 2;
+      letter-spacing: -0.2px;
+    }
+    .size-x .ed-sticker {
+      top: 28px;
+      right: 28px;
+      font-size: 24px;
+      padding: 12px 22px;
+    }
+
+    .ed-hand {
+      position: absolute;
+      left: 36px;
+      bottom: 24px;
+      font-family: 'Caveat', cursive;
+      font-size: 46px;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(28, 41, 32, 0.55);
+      padding: 4px 18px;
+      border-radius: 14px;
+      transform: rotate(-3deg);
+      z-index: 2;
+    }
+
+    .ed-content {
+      flex: 1;
       display: flex;
       flex-direction: column;
+      padding: 40px 56px 38px 56px;
+    }
+    .size-tiktok .ed-content {
+      padding: 56px 64px 64px 64px;
+    }
+    .size-x .ed-content {
+      width: 44%;
+      padding: 48px 48px 42px 48px;
+      justify-content: space-between;
     }
 
-    .card-category {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 24px;
+    .ed-category {
+      font-size: 21px;
       font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--card-sub);
+      letter-spacing: 2.5px;
       text-transform: uppercase;
+      color: #6a826f;
       margin-bottom: 12px;
     }
-    .card-category .dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background-color: #79947e;
-      display: inline-block;
-    }
-
-    .card-title {
-      font-size: 62px;
-      font-weight: 800;
-      line-height: 1.12;
-      color: var(--card-text);
-      margin-bottom: 16px;
+    .ed-title {
+      font-family: 'Fraunces', serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.08;
       letter-spacing: -1px;
+      color: #1c2920;
+      margin-bottom: 14px;
     }
-
-    .card-desc {
-      font-size: 29px;
-      line-height: 1.4;
-      color: var(--card-sub);
+    .size-tiktok .ed-title {
+      font-size: 72px;
       margin-bottom: 20px;
-      font-weight: 400;
+    }
+    .size-x .ed-title {
+      font-size: 48px;
     }
 
-    .card-bullets {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 24px;
+    .ed-desc {
       font-size: 26px;
-      font-weight: 600;
-      color: #36453b;
+      line-height: 1.4;
+      color: #4f5952;
+      font-weight: 400;
       margin-bottom: 18px;
     }
-    .card-bullets span {
+    .size-tiktok .ed-desc {
+      font-size: 32px;
+      margin-bottom: 24px;
+    }
+    .size-x .ed-desc {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .ed-bullets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      font-size: 23px;
+      font-weight: 600;
+      color: #2f3d33;
+      margin-bottom: 14px;
+    }
+    .ed-bullets span {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
-    .card-bullets span::before {
+    .ed-bullets span::before {
       content: "•";
       color: #79947e;
-      font-size: 30px;
+      font-size: 26px;
+    }
+    .size-tiktok .ed-bullets {
+      font-size: 28px;
+      gap: 12px 24px;
+      margin-bottom: 20px;
+    }
+    .size-x .ed-bullets {
+      font-size: 21px;
+      gap: 8px 16px;
     }
 
-    .card-tags {
-      font-size: 22px;
+    .ed-tags {
+      font-size: 20px;
       font-weight: 600;
       color: #5b7862;
-      letter-spacing: 0.2px;
       line-height: 1.35;
     }
+    .size-tiktok .ed-tags {
+      font-size: 24px;
+    }
+    .size-x .ed-tags {
+      font-size: 19px;
+    }
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+    .ed-footer {
       margin-top: auto;
       padding-top: 22px;
-    }
-
-    .price-block .price-label {
-      font-size: 24px;
-      color: var(--card-sub);
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-    .price-block .price-value {
-      font-size: 54px;
-      font-weight: 800;
-      color: var(--card-text);
-      letter-spacing: -0.5px;
-    }
-
-    .cta-pill {
-      background-color: var(--accent-green);
-      color: #ffffff;
-      font-size: 30px;
-      font-weight: 700;
-      padding: 24px 44px;
-      border-radius: 999px;
-      display: inline-flex;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      border-top: 1.5px solid #e4dcc8;
+    }
+    .ed-brand {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      color: #1c2920;
+    }
+    .ed-cta {
+      background: #26382b;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 999px;
     }
 
+    /* Action Bar & Controls */
     .action-bar {
       display: flex;
       gap: 8px;
@@ -670,112 +674,6 @@
       border-radius: 0 !important;
       box-shadow: none !important;
     }
-
-    /* === EDITORIAL PINTEREST - OVERRIDE === */
-    .poster-card {
-    background: #f7f4ec !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-    }
-    .poster-card.size-ig { width: 1080px !important; height: 1350px !important; }
-    .poster-card.size-tiktok { width: 1080px !important; height: 1920px !important; }
-    .poster-card.size-x { width: 1600px !important; height: 900px !important; flex-direction: row !important; }
-    
-    .ed-photo {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background: #ebe5d5;
-      flex-shrink: 0;
-    }
-    .size-ig .ed-photo { height: 790px; }
-    .size-tiktok .ed-photo { height: 1180px; }
-    .size-x .ed-photo { width: 58%; height: 100%; }
-    
-    .ed-photo .photo-grid, .ed-photo .photo-slot { border-radius: 0 !important; gap: 4px !important; }
-    .ed-photo .image-placeholder { height: 100%; display: flex; align-items: center; justify-content: center; }
-    
-    .ed-sticker {
-      position: absolute;
-      top: 36px;
-      right: 36px;
-      background: #1c2920;
-      color: #fff;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      padding: 16px 24px;
-      border-radius: 999px;
-      transform: rotate(4deg);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-      z-index: 2;
-      letter-spacing: -0.2px;
-    }
-    .size-x .ed-sticker { top: 28px; right: 28px; font-size: 24px; padding: 12px 20px; }
-    
-    .ed-hand {
-      position: absolute;
-      left: 36px;
-      bottom: 28px;
-      font-family: 'Caveat', cursive;
-      font-size: 44px;
-      font-weight: 700;
-      color: #fff;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.45);
-      transform: rotate(-4deg);
-      z-index: 2;
-    }
-    
-    .ed-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 44px 56px 40px 56px;
-    }
-    .size-tiktok .ed-content { padding: 56px 64px 52px 64px; }
-    .size-x .ed-content { width: 42%; padding: 52px 52px 44px 52px; justify-content: center; }
-    
-    .ed-category {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #79947e;
-      margin-bottom: 14px;
-    }
-    .ed-title {
-      font-family: 'Fraunces', serif;
-      font-size: 62px;
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -1px;
-      color: #1c2920;
-      margin-bottom: 14px;
-    }
-    .size-tiktok .ed-title { font-size: 78px; }
-    .size-x .ed-title { font-size: 52px; }
-    .ed-desc {
-      font-size: 28px;
-      line-height: 1.4;
-      color: #5c665f;
-      font-weight: 400;
-    }
-    .size-tiktok .ed-desc { font-size: 32px; }
-    .size-x .ed-desc { font-size: 26px; }
-    
-    .ed-footer {
-      margin-top: auto;
-      padding-top: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      border-top: 1px solid #e8e0cd;
-    }
-    .ed-brand { font-size: 20px; font-weight: 800; letter-spacing: 1.5px; color: #1c2920; }
-    .ed-cta { font-size: 22px; font-weight: 700; color: #1c2920; }
   </style>
 </head>
 <body>
@@ -913,14 +811,16 @@
         <label>Nama akun</label>
         <input type="text" id="inputBrand" value="CEKDULU.CHECKOUT" />
       </div>
-      <div class="control-group">
-        <label>Link 【entity-Shopee¦canonical_name=Shopee】 Affiliate</label>
-        <input type="text" id="inputShopeeLink" placeholder="Tempel link 【entity-Shopee¦canonical_name=Shopee】 affiliate di sini" />
-      </div>
 
-      <div class="control-group">
-        <label>Kode Produk (buat nyambung ke katalog)</label>
-        <input type="text" id="inputCode" placeholder="Contoh: D001" />
+      <div class="control-row">
+        <div class="control-group">
+          <label>Link Shopee Affiliate</label>
+          <input type="text" id="inputShopeeLink" placeholder="Tempel link Shopee affiliate di sini" />
+        </div>
+        <div class="control-group">
+          <label>Kode Produk (katalog)</label>
+          <input type="text" id="inputCode" placeholder="Contoh: D001" />
+        </div>
       </div>
     </div>
   </div>
@@ -1085,27 +985,11 @@
         const category = inputCategory.value || "Perlengkapan Rumah";
         const title = inputTitle.value || "Nama Produk";
         const desc = inputDesc.value || "";
+        const bulletsRaw = inputBullets.value || "";
+        const tagsRaw = inputTags.value.trim();
         const priceText = inputPrice.value.trim();
-        const cta = inputCta.value || "Cek di 【entity-Shopee¦canonical_name=Shopee】 →";
+        const cta = inputCta.value || "Cek di Shopee →";
         const imageHtml = buildImageCollageHtml();
-      
-        return `
-          <div class="ed-photo">
-            ${imageHtml}
-            <div class="ed-sticker">${escapeHtml(priceText)}</div>
-            <div class="ed-hand">udah aku cek!</div>
-          </div>
-          <div class="ed-content">
-            <div class="ed-category">${escapeHtml(category)} • ${escapeHtml(num)}</div>
-            <div class="ed-title">${escapeHtml(title)}</div>
-            <div class="ed-desc">${escapeHtml(desc)}</div>
-            <div class="ed-footer">
-              <span class="ed-brand">${escapeHtml(brand)}</span>
-              <span class="ed-cta">${escapeHtml(cta)}</span>
-            </div>
-          </div>
-        `;
-      }
 
         const bulletsHtml = bulletsRaw
           .split("|")
@@ -1115,58 +999,27 @@
           .join("");
 
         const tagsHtml = tagsRaw
-          ? `<div class="card-tags">${escapeHtml(tagsRaw)}</div>`
+          ? `<div class="ed-tags">${escapeHtml(tagsRaw)}</div>`
           : "";
 
-        const imageHtml = buildImageCollageHtml();
-
-        if (currentSize === "x") {
-          return `
-            <div class="x-left">
-              <div class="image-box">${imageHtml}</div>
-            </div>
-            <div class="x-right">
-              <div class="card-top-bar">
-                <span>${escapeHtml(brand)}</span>
-                <span>${escapeHtml(num)}</span>
-              </div>
-              <div class="card-body">
-                <div class="card-category"><i class="dot"></i>${escapeHtml(category)}</div>
-                <div class="card-title">${escapeHtml(title)}</div>
-                <div class="card-desc">${escapeHtml(desc)}</div>
-                <div class="card-bullets">${bulletsHtml}</div>
-                ${tagsHtml}
-              </div>
-              <div class="card-footer">
-                <div class="price-block">
-                  ${priceLabel ? `<div class="price-label">${escapeHtml(priceLabel)}</div>` : ""}
-                  <div class="price-value">${escapeHtml(priceMain)}</div>
-                </div>
-                <div class="cta-pill">${escapeHtml(cta)}</div>
-              </div>
-            </div>
-          `;
-        }
-
         return `
-          <div class="card-top-bar">
-            <span>${escapeHtml(brand)}</span>
-            <span>${escapeHtml(num)}</span>
+          <div class="ed-photo">
+            ${imageHtml}
+            ${priceText ? `<div class="ed-sticker">${escapeHtml(priceText)}</div>` : ""}
+            <div class="ed-hand">udah aku cek!</div>
           </div>
-          <div class="image-box">${imageHtml}</div>
-          <div class="card-body">
-            <div class="card-category"><i class="dot"></i>${escapeHtml(category)}</div>
-            <div class="card-title">${escapeHtml(title)}</div>
-            <div class="card-desc">${escapeHtml(desc)}</div>
-            <div class="card-bullets">${bulletsHtml}</div>
-            ${tagsHtml}
-          </div>
-          <div class="card-footer">
-            <div class="price-block">
-              ${priceLabel ? `<div class="price-label">${escapeHtml(priceLabel)}</div>` : ""}
-              <div class="price-value">${escapeHtml(priceMain)}</div>
+          <div class="ed-content">
+            <div>
+              <div class="ed-category">${escapeHtml(category)} • ${escapeHtml(num)}</div>
+              <div class="ed-title">${escapeHtml(title)}</div>
+              <div class="ed-desc">${escapeHtml(desc)}</div>
+              ${bulletsHtml ? `<div class="ed-bullets">${bulletsHtml}</div>` : ""}
+              ${tagsHtml}
             </div>
-            <div class="cta-pill">${escapeHtml(cta)}</div>
+            <div class="ed-footer">
+              <span class="ed-brand">${escapeHtml(brand)}</span>
+              <span class="ed-cta">${escapeHtml(cta)}</span>
+            </div>
           </div>
         `;
       }
@@ -1354,7 +1207,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
 
           const result = await response.json();
           const rawText = result.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-          const cleanText = rawText.replace(/```json|```/g, '').trim();
+          const cleanText = rawText.replace(/```json|```/g, "").trim();
           const parsed = JSON.parse(cleanText);
 
           if (parsed.kategori) inputCategory.value = parsed.kategori;
@@ -1409,7 +1262,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         }
       });
 
-      // Clean Off-Screen PNG Export (Zero shadow/gray border artifacts)
       downloadBtn.addEventListener("click", async () => {
         downloadBtn.disabled = true;
         const originalHtml = downloadBtn.innerHTML;
@@ -1458,6 +1310,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
       updateSsUi();
       renderPoster();
     });
+
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("sw.js").catch(() => {});
     }
