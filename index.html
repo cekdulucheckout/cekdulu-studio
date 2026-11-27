@@ -807,6 +807,15 @@
         <label>Nama akun</label>
         <input type="text" id="inputBrand" value="CEKDULU.CHECKOUT" />
       </div>
+      <div class="control-group">
+        <label>Link 【entity-Shopee¦canonical_name=Shopee】 Affiliate</label>
+        <input type="text" id="inputShopeeLink" placeholder="Tempel link 【entity-Shopee¦canonical_name=Shopee】 affiliate di sini" />
+      </div>
+
+      <div class="control-group">
+        <label>Kode Produk (buat nyambung ke katalog)</label>
+        <input type="text" id="inputCode" placeholder="Contoh: D001" />
+      </div>
     </div>
   </div>
 
@@ -854,6 +863,8 @@
       const inputPrice = document.getElementById("inputPrice");
       const inputCta = document.getElementById("inputCta");
       const inputBrand = document.getElementById("inputBrand");
+      const inputShopeeLink = document.getElementById("inputShopeeLink");
+      const inputCode = document.getElementById("inputCode");
 
       const geminiApiKeyInput = document.getElementById("geminiApiKey");
       const generateAiBtn = document.getElementById("generateAiBtn");
@@ -1227,7 +1238,8 @@ Keluarkan HANYA JSON murni tanpa markdown:
 
           const result = await response.json();
           const rawText = result.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
-          const parsed = JSON.parse(rawText);
+          const cleanText = rawText.replace(/```json|```/g, '').trim();
+          const parsed = JSON.parse(cleanText);
 
           if (parsed.kategori) inputCategory.value = parsed.kategori;
           if (parsed.nama_produk) inputTitle.value = parsed.nama_produk;
@@ -1264,7 +1276,12 @@ Keluarkan HANYA JSON murni tanpa markdown:
           .map(b => `• ${b}`)
           .join("\n");
 
-        const captionText = `${inputNumber.value} — ${inputTitle.value}\n\n${inputDesc.value}\n\n${bulletsList}\n\nHarga: ${inputPrice.value}\nLink produk ada di bio / katalog cekdulu.checkout 🛒\n\n${inputTags.value}`;
+        const shopeeLink = inputShopeeLink.value.trim();
+        const kodeProduk = inputCode.value.trim();
+        const linkBaris = shopeeLink ? `Link: ${shopeeLink}` : `Link produk ada di bio / katalog cekdulu.checkout 🛒`;
+        const kodeBaris = kodeProduk ? `\nKode: ${kodeProduk}` : ``;
+
+        const captionText = `${inputNumber.value} — ${inputTitle.value}\n\n${inputDesc.value}\n\n${bulletsList}\n\nHarga: ${inputPrice.value}${kodeBaris}\n${linkBaris}\n\n${inputTags.value}`;
 
         try {
           await navigator.clipboard.writeText(captionText);
