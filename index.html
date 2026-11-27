@@ -1142,7 +1142,7 @@ Baca semua gambar yang dilampirkan. Jika ada screenshot halaman produk Shopee, W
 ATURAN WAJIB:
 1. KONSISTENSI NAMA PRODUK: Gunakan nama asli produk sesuai screenshot Shopee (bersihkan dari kata spam SEO seperti "COD / Bisa Bayar di Tempat / Termurah"). Jika tidak ada screenshot, sebutkan nama barang secara literal dan paling umum (contoh: "Nampan Buah Kaca 27 cm").
 2. ANTI-AI: Dilarang keras memakai kata klise AI ("solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya"). Pakai bahasa sehari-hari yang membumi.
-3. HOOK DESKRIPSI: 1 kalimat singkat menyentuh manfaat nyata atau tampilan produk (maksimal 90 karakter).
+3. HOOK NAMPOL: 1 kalimat hook yang bikin berhenti scroll, maksimal 70 karakter. Wajib pakai 1 pola ini: "Jangan beli..." / "POV: ..." / "Baru ngeh..." / "Cuma Rp..." / "Kamar mandi kos...". Dilarang kalimat datar kayak "Nggak makan tempat". Harus ada masalah + rasa penasaran. Contoh yang bagus: "Kamar mandi kos 1x1 langsung lega." / "Jangan beli ember biasa sebelum liat ini."
 4. KEUNGGULAN: 3 fakta konkret (ukuran cm/liter, bahan, fitur fisik) dipisahkan tanda |.
 5. TAGAR RELEVAN: Buat 4-5 hashtag Bahasa Indonesia yang sangat relevan dengan produk dan kategorinya, huruf kecil semua, dipisah spasi.
 6. HARGA: Ekstrak harga terendah dari screenshot lalu bulatkan rapi ke ribuan terdekat. Jika ada variasi harga tulis "Mulai RpXX.XXX", jika tunggal tulis "RpXX.XXX", jika tidak ada info harga isi "".
@@ -1249,8 +1249,9 @@ Keluarkan HANYA JSON murni tanpa markdown:
         const kodeProduk = inputCode.value.trim();
         const linkBaris = shopeeLink ? `Link: ${shopeeLink}` : `Link produk ada di bio / katalog cekdulu.checkout 🛒`;
         const kodeBaris = kodeProduk ? `\nKode: ${kodeProduk}` : ``;
-
-        const captionText = `${inputNumber.value} — ${inputTitle.value}\n\n${inputDesc.value}\n\n${bulletsList}\n\nHarga: ${inputPrice.value}${kodeBaris}\n${linkBaris}\n\n${inputTags.value}`;
+        const hookCaption = inputDesc.value.trim() || inputTitle.value;
+        
+        const captionText = `${hookCaption}\n\n${inputNumber.value} — ${inputTitle.value}\n\n${bulletsList}\n\nHarga: ${inputPrice.value}${kodeBaris}\n${linkBaris}\n\nSave dulu biar nggak hilang 📌\n${inputTags.value}`;
 
         try {
           await navigator.clipboard.writeText(captionText);
