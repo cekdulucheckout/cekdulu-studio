@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="icon.svg" />
   <link rel="apple-touch-icon" href="icon.svg" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
@@ -670,6 +670,112 @@
       border-radius: 0 !important;
       box-shadow: none !important;
     }
+
+    /* === EDITORIAL PINTEREST - OVERRIDE === */
+    .poster-card {
+    background: #f7f4ec !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    }
+    .poster-card.size-ig { width: 1080px !important; height: 1350px !important; }
+    .poster-card.size-tiktok { width: 1080px !important; height: 1920px !important; }
+    .poster-card.size-x { width: 1600px !important; height: 900px !important; flex-direction: row !important; }
+    
+    .ed-photo {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #ebe5d5;
+      flex-shrink: 0;
+    }
+    .size-ig .ed-photo { height: 790px; }
+    .size-tiktok .ed-photo { height: 1180px; }
+    .size-x .ed-photo { width: 58%; height: 100%; }
+    
+    .ed-photo .photo-grid, .ed-photo .photo-slot { border-radius: 0 !important; gap: 4px !important; }
+    .ed-photo .image-placeholder { height: 100%; display: flex; align-items: center; justify-content: center; }
+    
+    .ed-sticker {
+      position: absolute;
+      top: 36px;
+      right: 36px;
+      background: #1c2920;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      padding: 16px 24px;
+      border-radius: 999px;
+      transform: rotate(4deg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      z-index: 2;
+      letter-spacing: -0.2px;
+    }
+    .size-x .ed-sticker { top: 28px; right: 28px; font-size: 24px; padding: 12px 20px; }
+    
+    .ed-hand {
+      position: absolute;
+      left: 36px;
+      bottom: 28px;
+      font-family: 'Caveat', cursive;
+      font-size: 44px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+      transform: rotate(-4deg);
+      z-index: 2;
+    }
+    
+    .ed-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 44px 56px 40px 56px;
+    }
+    .size-tiktok .ed-content { padding: 56px 64px 52px 64px; }
+    .size-x .ed-content { width: 42%; padding: 52px 52px 44px 52px; justify-content: center; }
+    
+    .ed-category {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #79947e;
+      margin-bottom: 14px;
+    }
+    .ed-title {
+      font-family: 'Fraunces', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: #1c2920;
+      margin-bottom: 14px;
+    }
+    .size-tiktok .ed-title { font-size: 78px; }
+    .size-x .ed-title { font-size: 52px; }
+    .ed-desc {
+      font-size: 28px;
+      line-height: 1.4;
+      color: #5c665f;
+      font-weight: 400;
+    }
+    .size-tiktok .ed-desc { font-size: 32px; }
+    .size-x .ed-desc { font-size: 26px; }
+    
+    .ed-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid #e8e0cd;
+    }
+    .ed-brand { font-size: 20px; font-weight: 800; letter-spacing: 1.5px; color: #1c2920; }
+    .ed-cta { font-size: 22px; font-weight: 700; color: #1c2920; }
   </style>
 </head>
 <body>
@@ -979,17 +1085,27 @@
         const category = inputCategory.value || "Perlengkapan Rumah";
         const title = inputTitle.value || "Nama Produk";
         const desc = inputDesc.value || "";
-        const bulletsRaw = inputBullets.value || "";
-        const tagsRaw = inputTags.value.trim();
         const priceText = inputPrice.value.trim();
-        const cta = inputCta.value || "Cek di Shopee →";
-
-        let priceLabel = "";
-        let priceMain = priceText;
-        if (priceText.toLowerCase().startsWith("mulai ")) {
-          priceLabel = "Mulai";
-          priceMain = priceText.substring(6).trim();
-        }
+        const cta = inputCta.value || "Cek di 【entity-Shopee¦canonical_name=Shopee】 →";
+        const imageHtml = buildImageCollageHtml();
+      
+        return `
+          <div class="ed-photo">
+            ${imageHtml}
+            <div class="ed-sticker">${escapeHtml(priceText)}</div>
+            <div class="ed-hand">udah aku cek!</div>
+          </div>
+          <div class="ed-content">
+            <div class="ed-category">${escapeHtml(category)} • ${escapeHtml(num)}</div>
+            <div class="ed-title">${escapeHtml(title)}</div>
+            <div class="ed-desc">${escapeHtml(desc)}</div>
+            <div class="ed-footer">
+              <span class="ed-brand">${escapeHtml(brand)}</span>
+              <span class="ed-cta">${escapeHtml(cta)}</span>
+            </div>
+          </div>
+        `;
+      }
 
         const bulletsHtml = bulletsRaw
           .split("|")
