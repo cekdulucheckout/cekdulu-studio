@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
@@ -21,10 +21,10 @@
       --text-light: #f3f4f1;
       --text-muted: #9ba69e;
       --accent-green: #26382b;
-      --card-cream: #f7f4ec;
-      --card-box: #ebe5d5;
-      --card-text: #1c2920;
-      --card-sub: #5c665f;
+      --card-cream: #f8f5ed;
+      --card-box: #eae3d2;
+      --card-text: #1b281f;
+      --card-sub: #546158;
     }
 
     * {
@@ -109,57 +109,188 @@
       padding: 4px 0;
     }
 
-    /* === EDITORIAL PINTEREST POSTER CARD === */
+    /* ============================================================
+       HANDCRAFTED EDITORIAL LOOKBOOK CARD (CANVA / ILLUSTRATOR VIBE)
+       ============================================================ */
     .poster-card {
-      background: #f7f4ec;
+      background-color: #f8f5ed;
+      background-image: radial-gradient(#dfd7c5 1.3px, transparent 1.3px);
+      background-size: 26px 26px;
       color: var(--card-text);
-      padding: 0;
       border-radius: 28px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       position: relative;
       overflow: hidden;
       transform-origin: top center;
       flex-shrink: 0;
     }
+
     .poster-card.size-ig {
       width: 1080px;
       height: 1350px;
+      padding: 38px 46px 40px 46px;
     }
     .poster-card.size-tiktok {
       width: 1080px;
       height: 1920px;
+      padding: 76px 48px 88px 48px;
     }
     .poster-card.size-x {
       width: 1600px;
       height: 900px;
+      padding: 40px 46px;
       flex-direction: row;
+      gap: 44px;
+      align-items: stretch;
     }
 
-    .ed-photo {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background: #ebe5d5;
+    /* Top Editorial Masthead */
+    .hc-masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid #1b281f;
       flex-shrink: 0;
     }
-    .size-ig .ed-photo {
-      height: 700px;
+    .hc-brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #1b281f;
     }
-    .size-tiktok .ed-photo {
-      height: 1080px;
+    .hc-brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4e9a63;
+      display: inline-block;
     }
-    .size-x .ed-photo {
-      width: 56%;
+    .hc-issue-pill {
+      background: #ebe4d3;
+      border: 1.5px solid #1b281f;
+      color: #1b281f;
+      font-size: 19px;
+      font-weight: 800;
+      padding: 6px 18px;
+      border-radius: 999px;
+      letter-spacing: 1px;
+    }
+
+    /* Framed Photo Stage with Washi Tape & Overlapping Stickers */
+    .hc-photo-wrap {
+      position: relative;
+      width: 100%;
+      flex-shrink: 0;
+    }
+    .size-ig .hc-photo-wrap {
+      height: 675px;
+    }
+    .size-tiktok .hc-photo-wrap {
+      height: 1030px;
+    }
+    .size-x .hc-photo-wrap {
+      width: 790px;
       height: 100%;
+    }
+
+    .hc-photo-frame {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      padding: 14px;
+      border: 2.5px solid #1b281f;
+      border-radius: 26px;
+      box-shadow: 10px 10px 0px #dfd7c5;
+      overflow: hidden;
+      position: relative;
+    }
+    .hc-photo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #eae3d2;
+      position: relative;
+    }
+
+    /* Decorative Washi Tape at top-left */
+    .hc-tape {
+      position: absolute;
+      top: -14px;
+      left: 44px;
+      width: 150px;
+      height: 36px;
+      background: rgba(217, 229, 212, 0.88);
+      border-left: 2px dashed rgba(27, 40, 31, 0.25);
+      border-right: 2px dashed rgba(27, 40, 31, 0.25);
+      transform: rotate(-6deg);
+      z-index: 4;
+    }
+
+    /* Price Stamp Sticker */
+    .hc-price-badge {
+      position: absolute;
+      top: -16px;
+      right: 26px;
+      background: #1b281f;
+      color: #f8f5ed;
+      border: 3px solid #f8f5ed;
+      padding: 14px 28px;
+      border-radius: 999px;
+      transform: rotate(3.5deg);
+      box-shadow: 0 10px 22px rgba(27, 40, 31, 0.24);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.05;
+    }
+    .hc-price-badge small {
+      font-size: 16px;
+      font-weight: 600;
+      color: #a3d9b1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+    .hc-price-badge strong {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /* Overlapping Handwritten Sticky Note */
+    .hc-sticky-note {
+      position: absolute;
+      left: 30px;
+      bottom: -18px;
+      background: #e5efe3;
+      border: 2px solid #1b281f;
+      color: #1b281f;
+      font-family: 'Caveat', cursive;
+      font-size: 38px;
+      font-weight: 700;
+      padding: 4px 22px 6px 22px;
+      border-radius: 14px;
+      transform: rotate(-2.5deg);
+      box-shadow: 4px 4px 0px #1b281f;
+      z-index: 5;
     }
 
     .image-placeholder {
       width: 100%;
       height: 100%;
-      color: #8f8a7c;
+      color: #7d7768;
       font-size: 28px;
-      font-weight: 500;
+      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -171,8 +302,8 @@
       width: 100%;
       height: 100%;
       display: grid;
-      gap: 4px;
-      background-color: var(--card-cream);
+      gap: 6px;
+      background-color: #ffffff;
     }
     .photo-grid.count-1 {
       grid-template-columns: 1fr;
@@ -212,7 +343,7 @@
     .more-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(20, 28, 23, 0.58);
+      background: rgba(20, 28, 23, 0.6);
       color: #fff;
       font-size: 46px;
       font-weight: 800;
@@ -221,166 +352,144 @@
       justify-content: center;
     }
 
-    .ed-sticker {
-      position: absolute;
-      top: 36px;
-      right: 36px;
-      background: #1c2920;
-      color: #fff;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      padding: 16px 26px;
-      border-radius: 999px;
-      transform: rotate(4deg);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
-      z-index: 2;
-      letter-spacing: -0.2px;
-    }
-    .size-x .ed-sticker {
-      top: 28px;
-      right: 28px;
-      font-size: 24px;
-      padding: 12px 22px;
-    }
-
-    .ed-hand {
-      position: absolute;
-      left: 36px;
-      bottom: 24px;
-      font-family: 'Caveat', cursive;
-      font-size: 46px;
-      font-weight: 700;
-      color: #ffffff;
-      background: rgba(28, 41, 32, 0.55);
-      padding: 4px 18px;
-      border-radius: 14px;
-      transform: rotate(-3deg);
-      z-index: 2;
-    }
-
-    .ed-content {
+    /* Editorial Info Panel (Compact, Balanced, Zero Dead Space) */
+    .hc-body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 40px 56px 38px 56px;
-    }
-    .size-tiktok .ed-content {
-      padding: 56px 64px 64px 64px;
-    }
-    .size-x .ed-content {
-      width: 44%;
-      padding: 48px 48px 42px 48px;
       justify-content: space-between;
+      padding-top: 28px;
+    }
+    .size-tiktok .hc-body {
+      padding-top: 38px;
+    }
+    .size-x .hc-body {
+      padding-top: 0;
     }
 
-    .ed-category {
-      font-size: 21px;
+    .hc-main-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .size-tiktok .hc-main-copy {
+      gap: 18px;
+    }
+
+    .hc-cat-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hc-cat-pill {
+      background: #26382b;
+      color: #d9edd9;
+      font-size: 19px;
       font-weight: 700;
-      letter-spacing: 2.5px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #6a826f;
-      margin-bottom: 12px;
+      padding: 6px 16px;
+      border-radius: 8px;
     }
-    .ed-title {
+    .hc-tags-inline {
+      font-size: 20px;
+      font-weight: 600;
+      color: #5b7862;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hc-title {
       font-family: 'Fraunces', serif;
-      font-size: 56px;
+      font-size: 58px;
       font-weight: 700;
-      line-height: 1.08;
+      line-height: 1.06;
       letter-spacing: -1px;
-      color: #1c2920;
-      margin-bottom: 14px;
+      color: #1b281f;
     }
-    .size-tiktok .ed-title {
-      font-size: 72px;
-      margin-bottom: 20px;
+    .size-tiktok .hc-title {
+      font-size: 74px;
     }
-    .size-x .ed-title {
-      font-size: 48px;
+    .size-x .hc-title {
+      font-size: 52px;
     }
 
-    .ed-desc {
-      font-size: 26px;
-      line-height: 1.4;
-      color: #4f5952;
-      font-weight: 400;
-      margin-bottom: 18px;
+    .hc-desc {
+      font-size: 27px;
+      line-height: 1.38;
+      color: #46544b;
+      font-weight: 500;
     }
-    .size-tiktok .ed-desc {
-      font-size: 32px;
-      margin-bottom: 24px;
+    .size-tiktok .hc-desc {
+      font-size: 33px;
     }
-    .size-x .ed-desc {
-      font-size: 24px;
-      margin-bottom: 16px;
+    .size-x .hc-desc {
+      font-size: 25px;
     }
 
-    .ed-bullets {
+    /* Spec Pills (Like Illustrator Product Spec Tags) */
+    .hc-specs {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px 20px;
-      font-size: 23px;
-      font-weight: 600;
-      color: #2f3d33;
-      margin-bottom: 14px;
+      gap: 10px 12px;
+      margin-top: 4px;
     }
-    .ed-bullets span {
+    .hc-spec-chip {
+      background: #ffffff;
+      border: 1.5px solid #c9c0ab;
+      color: #1b281f;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
-    .ed-bullets span::before {
-      content: "•";
-      color: #79947e;
+    .hc-spec-chip::before {
+      content: "✓";
+      color: #3d8551;
+      font-weight: 800;
+    }
+    .size-tiktok .hc-spec-chip {
       font-size: 26px;
+      padding: 12px 22px;
     }
-    .size-tiktok .ed-bullets {
-      font-size: 28px;
-      gap: 12px 24px;
-      margin-bottom: 20px;
-    }
-    .size-x .ed-bullets {
-      font-size: 21px;
-      gap: 8px 16px;
-    }
-
-    .ed-tags {
+    .size-x .hc-spec-chip {
       font-size: 20px;
-      font-weight: 600;
-      color: #5b7862;
-      line-height: 1.35;
-    }
-    .size-tiktok .ed-tags {
-      font-size: 24px;
-    }
-    .size-x .ed-tags {
-      font-size: 19px;
+      padding: 8px 15px;
     }
 
-    .ed-footer {
-      margin-top: auto;
-      padding-top: 22px;
+    /* Bottom Action Bar */
+    .hc-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1.5px solid #e4dcc8;
+      padding-top: 18px;
+      margin-top: 16px;
+      border-top: 2px dashed #c8bfa8;
     }
-    .ed-brand {
-      font-size: 21px;
-      font-weight: 800;
-      letter-spacing: 1.8px;
-      color: #1c2920;
+    .hc-slogan {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 23px;
+      font-weight: 600;
+      color: #4b5950;
     }
-    .ed-cta {
-      background: #26382b;
-      color: #ffffff;
-      font-size: 22px;
+    .hc-cta-btn {
+      background: #1b281f;
+      color: #f8f5ed;
+      font-size: 24px;
       font-weight: 700;
-      padding: 14px 28px;
+      padding: 16px 32px;
       border-radius: 999px;
+      box-shadow: 4px 4px 0px #8eb897;
     }
 
-    /* Action Bar & Dual Copy Caption Buttons */
+    /* ============================================================
+       UI CONTROLS PANEL
+       ============================================================ */
     .action-stack {
       display: flex;
       flex-direction: column;
@@ -428,7 +537,6 @@
       flex-direction: column;
       align-items: center;
       gap: 2px;
-      transition: all 0.15s;
     }
     .btn-copy-long span,
     .btn-copy-short span {
@@ -449,7 +557,6 @@
       flex-direction: column;
       align-items: center;
       gap: 2px;
-      transition: all 0.15s;
     }
 
     .controls-panel {
@@ -739,7 +846,7 @@
   <div class="app-container">
     <div class="header">
       <h1 id="headerTitle">Template Affiliate • 1080×1350</h1>
-      <p>Unggah foto & screenshot Shopee, racik hook 3 detik anti-skip, lalu salin caption panjang (IG/FB/Pinterest) atau pendek (X/Threads ≤280 karakter).</p>
+      <p>Desain bergaya editorial lookbook tanpa ruang kosong + copywriter AI hook 3 detik anti-skip & dual caption.</p>
     </div>
 
     <div class="size-tabs">
@@ -822,7 +929,7 @@
         <div class="ai-status" id="aiStatus"></div>
       </div>
 
-      <!-- 3. Dual Caption Editor (Panjang & Pendek <= 280 Char) -->
+      <!-- 3. Dual Caption Editor -->
       <div class="caption-box-section">
         <div class="caption-section-title">📝 Hasil Caption Siap Posting (Otomatis Terisi AI / Bisa Diedit)</div>
 
@@ -869,7 +976,7 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
 
       <div class="control-row">
         <div class="control-group">
-          <label>Nomor</label>
+          <label>Nomor Edisi</label>
           <input type="text" id="inputNumber" value="No. 001" />
         </div>
         <div class="control-group">
@@ -893,9 +1000,15 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
         <input type="text" id="inputBullets" value="Silikon tebal lentur | Muat 3L–10L | Ada lubang gantung" />
       </div>
 
-      <div class="control-group">
-        <label>Tagar di poster</label>
-        <input type="text" id="inputTags" value="#barangrumah #perlengkapankos #emberlipat #shopeehaul" />
+      <div class="control-row">
+        <div class="control-group">
+          <label>Catatan stiker kecil</label>
+          <input type="text" id="inputStickyNote" value="udah aku cek!" />
+        </div>
+        <div class="control-group">
+          <label>Tagar singkat di poster</label>
+          <input type="text" id="inputTags" value="#barangrumah #perlengkapankos" />
+        </div>
       </div>
 
       <div class="control-row">
@@ -968,6 +1081,7 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
       const inputTitle = document.getElementById("inputTitle");
       const inputDesc = document.getElementById("inputDesc");
       const inputBullets = document.getElementById("inputBullets");
+      const inputStickyNote = document.getElementById("inputStickyNote");
       const inputTags = document.getElementById("inputTags");
       const inputPrice = document.getElementById("inputPrice");
       const inputCta = document.getElementById("inputCta");
@@ -997,7 +1111,6 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
         const longLen = inputCaptionLong.value.length;
         longCharCounter.textContent = `${longLen} karakter`;
 
-        // Enforce max 280 chars for X/Threads
         if (inputCaptionShort.value.length > 280) {
           inputCaptionShort.value = inputCaptionShort.value.slice(0, 280);
         }
@@ -1013,12 +1126,10 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
       inputCaptionLong.addEventListener("input", updateCharCounters);
       inputCaptionShort.addEventListener("input", updateCharCounters);
 
-      // Sync Shopee link & product code into captions automatically when typed
       function syncLinksToCaptions() {
         const link = inputShopeeLink.value.trim();
         const code = inputCode.value.trim();
 
-        // Update Long Caption footer if link or code is entered
         let longText = inputCaptionLong.value;
         if (code) {
           if (/^Kode:\s*.*/m.test(longText)) {
@@ -1036,7 +1147,6 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
         }
         inputCaptionLong.value = longText;
 
-        // Append link to short caption if there is space within 280 chars
         if (link && !inputCaptionShort.value.includes(link)) {
           const baseShort = inputCaptionShort.value.replace(/\s*https?:\/\/\S+/g, "").trim();
           const candidate = `${baseShort} ${link}`;
@@ -1151,39 +1261,86 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
         const title = inputTitle.value || "Nama Produk";
         const desc = inputDesc.value || "";
         const bulletsRaw = inputBullets.value || "";
+        const stickyNote = inputStickyNote.value.trim();
         const tagsRaw = inputTags.value.trim();
         const priceText = inputPrice.value.trim();
         const cta = inputCta.value || "Cek di Shopee →";
         const imageHtml = buildImageCollageHtml();
 
-        const bulletsHtml = bulletsRaw
+        let priceTopLabel = "";
+        let priceMainVal = priceText;
+        if (priceText.toLowerCase().startsWith("mulai ")) {
+          priceTopLabel = "Mulai";
+          priceMainVal = priceText.substring(6).trim();
+        }
+
+        const specsHtml = bulletsRaw
           .split("|")
           .map(b => b.trim())
           .filter(Boolean)
-          .map(b => `<span>${escapeHtml(b)}</span>`)
+          .map(b => `<span class="hc-spec-chip">${escapeHtml(b)}</span>`)
           .join("");
 
-        const tagsHtml = tagsRaw
-          ? `<div class="ed-tags">${escapeHtml(tagsRaw)}</div>`
-          : "";
+        const photoBlockHtml = `
+          <div class="hc-photo-wrap">
+            <div class="hc-tape"></div>
+            ${priceText ? `
+              <div class="hc-price-badge">
+                ${priceTopLabel ? `<small>${escapeHtml(priceTopLabel)}</small>` : ""}
+                <strong>${escapeHtml(priceMainVal)}</strong>
+              </div>
+            ` : ""}
+            <div class="hc-photo-frame">
+              <div class="hc-photo-inner">${imageHtml}</div>
+            </div>
+            ${stickyNote ? `<div class="hc-sticky-note">${escapeHtml(stickyNote)}</div>` : ""}
+          </div>
+        `;
+
+        if (currentSize === "x") {
+          return `
+            ${photoBlockHtml}
+            <div class="hc-body">
+              <div class="hc-masthead">
+                <span class="hc-brand-tag"><i class="hc-brand-dot"></i>${escapeHtml(brand)}</span>
+                <span class="hc-issue-pill">${escapeHtml(num)}</span>
+              </div>
+              <div class="hc-main-copy">
+                <div class="hc-cat-row">
+                  <span class="hc-cat-pill">${escapeHtml(category)}</span>
+                  ${tagsRaw ? `<span class="hc-tags-inline">${escapeHtml(tagsRaw)}</span>` : ""}
+                </div>
+                <div class="hc-title">${escapeHtml(title)}</div>
+                <div class="hc-desc">${escapeHtml(desc)}</div>
+                ${specsHtml ? `<div class="hc-specs">${specsHtml}</div>` : ""}
+              </div>
+              <div class="hc-footer">
+                <span class="hc-slogan">Murah wajib, bagus harus.</span>
+                <span class="hc-cta-btn">${escapeHtml(cta)}</span>
+              </div>
+            </div>
+          `;
+        }
 
         return `
-          <div class="ed-photo">
-            ${imageHtml}
-            ${priceText ? `<div class="ed-sticker">${escapeHtml(priceText)}</div>` : ""}
-            <div class="ed-hand">udah aku cek!</div>
+          <div class="hc-masthead">
+            <span class="hc-brand-tag"><i class="hc-brand-dot"></i>${escapeHtml(brand)}</span>
+            <span class="hc-issue-pill">${escapeHtml(num)}</span>
           </div>
-          <div class="ed-content">
-            <div>
-              <div class="ed-category">${escapeHtml(category)} • ${escapeHtml(num)}</div>
-              <div class="ed-title">${escapeHtml(title)}</div>
-              <div class="ed-desc">${escapeHtml(desc)}</div>
-              ${bulletsHtml ? `<div class="ed-bullets">${bulletsHtml}</div>` : ""}
-              ${tagsHtml}
+          ${photoBlockHtml}
+          <div class="hc-body">
+            <div class="hc-main-copy">
+              <div class="hc-cat-row">
+                <span class="hc-cat-pill">${escapeHtml(category)}</span>
+                ${tagsRaw ? `<span class="hc-tags-inline">${escapeHtml(tagsRaw)}</span>` : ""}
+              </div>
+              <div class="hc-title">${escapeHtml(title)}</div>
+              <div class="hc-desc">${escapeHtml(desc)}</div>
+              ${specsHtml ? `<div class="hc-specs">${specsHtml}</div>` : ""}
             </div>
-            <div class="ed-footer">
-              <span class="ed-brand">${escapeHtml(brand)}</span>
-              <span class="ed-cta">${escapeHtml(cta)}</span>
+            <div class="hc-footer">
+              <span class="hc-slogan">Murah wajib, bagus harus.</span>
+              <span class="hc-cta-btn">${escapeHtml(cta)}</span>
             </div>
           </div>
         `;
@@ -1217,7 +1374,7 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
 
       [
         zoomRange, brightnessRange, inputNumber, inputCategory,
-        inputTitle, inputDesc, inputBullets, inputTags, inputPrice, inputCta, inputBrand
+        inputTitle, inputDesc, inputBullets, inputStickyNote, inputTags, inputPrice, inputCta, inputBrand
       ].forEach(el => el.addEventListener("input", renderPoster));
 
       window.addEventListener("resize", scalePreview);
@@ -1277,7 +1434,6 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
         }
       });
 
-      // Smart trim to <= 280 chars without cutting words abruptly
       function fitWithin280(text) {
         const clean = String(text || "").trim();
         if (clean.length <= 280) return clean;
@@ -1310,7 +1466,6 @@ Cek produknya di bio / katalog cekdulu.checkout 🛒
         try {
           const userShopeeLink = inputShopeeLink.value.trim();
           const userCode = inputCode.value.trim();
-          const userNum = inputNumber.value.trim() || "No. 001";
 
           const promptText = `Kamu adalah senior copywriter manusia asli untuk akun kurasi barang rumah & kos Indonesia "cekdulu.checkout" (slogan: "Murah itu wajib, bagus itu harus").
 
@@ -1318,7 +1473,7 @@ TUGAS UTAMA:
 Baca semua gambar yang dilampirkan. Jika ada screenshot halaman produk Shopee, WAJIB ikuti judul asli, spesifikasi, dan harga pada screenshot tersebut. Sarikan menjadi teks poster DAN 2 versi caption media sosial dengan **HOOK 3 DETIK YANG NAMPOL BIKIN ORANG STOP SCROLL**.
 
 ATURAN WAJIB GAYA BAHASA:
-1. HOOK 3 DETIK ANTI-SKIP: Kalimat pertama wajib langsung menohok masalah harian yang relate, bikin penasaran, atau kontras antara harga murah vs kualitasnya (Contoh: "Meja tamu berantakan tiap ada tamu datang? Pindahin ke wadah kaca ini langsung kelihatan kayak ruang tamu hotel.", atau "Cuma Rp15 ribuan tapi bikin kamar mandi sempit berasa lega setengahnya.").
+1. HOOK 3 DETIK ANTI-SKIP: Kalimat pertama wajib langsung menohok masalah harian yang relate, bikin penasaran, atau kontras antara harga murah vs kualitasnya.
 2. DILARANG KERAS BAHASA AI: Jangan pernah pakai kata klise AI ("solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya"). Pakai gaya ngobrol jujur seperti teman yang baru nemu barang bagus.
 3. KONSISTENSI NAMA PRODUK: Gunakan nama asli produk sesuai screenshot Shopee (bersihkan dari spam keyword seperti "COD / Termurah").
 4. CAPTION PANJANG (untuk Pinterest, Facebook, Instagram — bebas panjang):
@@ -1336,7 +1491,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
   "nama_produk": "Nama produk akurat & konsisten (2-5 kata + ukuran bila ada)",
   "deskripsi_poster": "1 kalimat hook singkat untuk kartu poster, maksimal 90 karakter",
   "keunggulan_poster": "Keunggulan 1 | Keunggulan 2 | Keunggulan 3",
-  "tagar_poster": "#tag1 #tag2 #tag3 #tag4",
+  "tagar_poster": "#tag1 #tag2",
   "harga": "Mulai RpXX.XXX atau RpXX.XXX atau kosong",
   "caption_panjang": "Teks lengkap untuk Pinterest, Facebook & Instagram (gunakan \\n untuk baris baru)",
   "caption_pendek": "Teks punchy khusus X & Threads WAJIB di bawah 250 karakter"
@@ -1431,7 +1586,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         aiStatus.textContent = msg;
       }
 
-      // Copy Long Caption (Pinterest, Facebook, Instagram)
       copyLongBtn.addEventListener("click", async () => {
         const textToCopy = inputCaptionLong.value.trim();
         if (!textToCopy) return;
@@ -1445,7 +1599,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         }
       });
 
-      // Copy Short Caption (X & Threads <= 280 chars)
       copyShortBtn.addEventListener("click", async () => {
         const textToCopy = fitWithin280(inputCaptionShort.value);
         if (!textToCopy) return;
@@ -1459,7 +1612,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         }
       });
 
-      // Clean Off-Screen PNG Export
       downloadBtn.addEventListener("click", async () => {
         downloadBtn.disabled = true;
         const originalHtml = downloadBtn.innerHTML;
@@ -1480,7 +1632,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
             height: currentHeight,
             scale: 1,
             useCORS: true,
-            backgroundColor: "#f7f4ec",
+            backgroundColor: "#f8f5ed",
             logging: false
           });
 
