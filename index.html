@@ -380,19 +380,20 @@
       border-radius: 999px;
     }
 
-    /* Action Bar & Controls */
-    .action-bar {
+    /* Action Bar & Dual Copy Caption Buttons */
+    .action-stack {
       display: flex;
+      flex-direction: column;
       gap: 8px;
     }
     .btn-download {
-      flex: 2;
+      width: 100%;
       background: #4e9a63;
       color: #fff;
       border: none;
       padding: 14px 16px;
       border-radius: 14px;
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -408,20 +409,47 @@
       opacity: 0.6;
       cursor: wait;
     }
-    .btn-copy-caption {
-      flex: 1;
+
+    .caption-copy-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-copy-long {
       background: #233328;
       color: #a9e3b8;
       border: 1px solid #3c5c46;
-      padding: 14px 12px;
-      border-radius: 14px;
-      font-size: 12.5px;
+      padding: 12px 10px;
+      border-radius: 12px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 5px;
+      gap: 2px;
+      transition: all 0.15s;
+    }
+    .btn-copy-long span,
+    .btn-copy-short span {
+      font-size: 10px;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .btn-copy-short {
+      background: #1b2832;
+      color: #93c5fd;
+      border: 1px solid #334e63;
+      padding: 12px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: all 0.15s;
     }
 
     .controls-panel {
@@ -444,11 +472,25 @@
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
+    .label-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     label {
       font-size: 12px;
       font-weight: 600;
       color: var(--text-muted);
+    }
+
+    .char-counter {
+      font-size: 11px;
+      font-weight: 700;
+      color: #8ee0a3;
+    }
+    .char-counter.over {
+      color: #f87171;
     }
 
     input[type="text"],
@@ -462,11 +504,27 @@
       border-radius: 10px;
       font-size: 13.5px;
       outline: none;
+      line-height: 1.45;
     }
     input[type="text"]:focus,
     input[type="password"]:focus,
     textarea:focus {
       border-color: #68b07b;
+    }
+
+    .caption-box-section {
+      background: #161f19;
+      border: 1px solid #2c3e32;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .caption-section-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #d3e5d8;
     }
 
     .file-upload-box {
@@ -681,7 +739,7 @@
   <div class="app-container">
     <div class="header">
       <h1 id="headerTitle">Template Affiliate • 1080×1350</h1>
-      <p>Unggah foto produk & screenshot Shopee sekali, kunci teksnya agar 100% konsisten, lalu unduh untuk semua ukuran platform.</p>
+      <p>Unggah foto & screenshot Shopee, racik hook 3 detik anti-skip, lalu salin caption panjang (IG/FB/Pinterest) atau pendek (X/Threads ≤280 karakter).</p>
     </div>
 
     <div class="size-tabs">
@@ -703,16 +761,25 @@
       <div id="posterCard" class="poster-card size-ig"></div>
     </div>
 
-    <div class="action-bar">
+    <!-- Action Download & Dual Copy Caption -->
+    <div class="action-stack">
       <button type="button" class="btn-download" id="downloadBtn">
-        💾 Unduh PNG (<span id="btnSizeText">1080×1350</span>)
+        💾 Unduh Gambar PNG (<span id="btnSizeText">1080×1350</span>)
       </button>
-      <button type="button" class="btn-copy-caption" id="copyCaptionBtn">
-        📋 Salin Caption
-      </button>
+      <div class="caption-copy-row">
+        <button type="button" class="btn-copy-long" id="copyLongBtn">
+          📋 Salin Caption Panjang
+          <span>Pinterest • Facebook • Instagram</span>
+        </button>
+        <button type="button" class="btn-copy-short" id="copyShortBtn">
+          ⚡ Salin Caption Pendek
+          <span>X & Threads (Maks 280 karakter)</span>
+        </button>
+      </div>
     </div>
 
     <div class="controls-panel">
+      <!-- 1. Upload Foto Poster -->
       <div class="control-group">
         <label>1. Foto produk untuk poster (bisa pilih lebih dari 1 foto)</label>
         <div class="file-upload-box">
@@ -726,9 +793,10 @@
         </div>
       </div>
 
+      <!-- 2. AI Copywriter Box -->
       <div class="ai-box">
         <div class="ai-header">
-          <span>✨ Copywriter Otomatis (Konsisten)</span>
+          <span>✨ Copywriter AI (Hook 3 Detik + Dual Caption)</span>
           <label class="checkbox-inline">
             <input type="checkbox" id="autoGenOnUpload" checked /> Auto-jalan sekali
           </label>
@@ -739,13 +807,13 @@
         <div class="ss-upload-row">
           <input type="file" id="screenshotInput" accept="image/*" multiple style="display: none;" />
           <button type="button" class="btn-ss-pick" id="pickSsBtn">📄 Upload Screenshot Shopee</button>
-          <span class="ss-info-text" id="ssInfoText">Wajib disarankan agar judul 100% akurat</span>
+          <span class="ss-info-text" id="ssInfoText">Wajib disarankan agar judul & harga akurat</span>
           <button type="button" class="btn-file-clear" id="clearSsBtn" style="padding: 5px 8px;">×</button>
         </div>
 
         <div class="ai-btn-row">
           <button class="btn-ai" id="generateAiBtn" type="button">
-            ✍️ Generate Teks
+            ✍️ Racik Poster & 2 Caption
           </button>
           <button class="btn-lock" id="lockTextBtn" type="button">
             🔓 Kunci Teks
@@ -754,6 +822,40 @@
         <div class="ai-status" id="aiStatus"></div>
       </div>
 
+      <!-- 3. Dual Caption Editor (Panjang & Pendek <= 280 Char) -->
+      <div class="caption-box-section">
+        <div class="caption-section-title">📝 Hasil Caption Siap Posting (Otomatis Terisi AI / Bisa Diedit)</div>
+
+        <div class="control-group">
+          <div class="label-flex">
+            <label>Caption Panjang (Pinterest, Facebook, Instagram — bebas panjang)</label>
+            <span class="char-counter" id="longCharCounter">0 karakter</span>
+          </div>
+          <textarea id="inputCaptionLong" rows="5">Kamar mandi kosan sempit tapi butuh ember gede buat rendam cucian?
+
+Ember lipat ini penyelamat banget. Bahannya silikon tebal yang lentur tapi kokoh pas diisi penuh air, dan habis dipakai tinggal tekan sampai gepeng lalu gantung di paku dinding. Nggak makan tempat sama sekali!
+
+• Kapasitas lega (tersedia 3L, 5L, 10L)
+• Silikon tebal anti bocor & gagang kuat
+• Praktis dibawa camping atau masuk bagasi mobil
+
+Harga: Mulai Rp15.000
+Kode: D001
+Cek produknya di bio / katalog cekdulu.checkout 🛒
+
+#barangrumah #perlengkapankos #emberlipat #alatkebersihan #shopeehaul</textarea>
+        </div>
+
+        <div class="control-group">
+          <div class="label-flex">
+            <label>Caption Pendek (X & Threads — batas 280 karakter)</label>
+            <span class="char-counter" id="shortCharCounter">0 / 280</span>
+          </div>
+          <textarea id="inputCaptionShort" rows="3" maxlength="280">Kamar mandi sempit tapi butuh ember gede? Pakai ember lipat silikon ini—habis dipakai tinggal gepengin dan gantung di dinding. Muat sampai 10L, mulai Rp15rb aja. Cek katalog bio! #perlengkapankos #barangrumah</textarea>
+        </div>
+      </div>
+
+      <!-- 4. Pengaturan Poster Visual -->
       <div class="control-row">
         <div class="control-group">
           <label>Zoom foto</label>
@@ -777,22 +879,22 @@
       </div>
 
       <div class="control-group">
-        <label>Nama produk</label>
+        <label>Nama produk (di poster)</label>
         <input type="text" id="inputTitle" value="Ember Lipat Portable" />
       </div>
 
       <div class="control-group">
-        <label>Deskripsi singkat (hook)</label>
+        <label>Hook singkat di poster</label>
         <textarea id="inputDesc" rows="2">Nggak makan tempat di kamar mandi sempit, habis pakai tinggal lipat rata ke dinding.</textarea>
       </div>
 
       <div class="control-group">
-        <label>Keunggulan (pisahkan dengan |)</label>
+        <label>Keunggulan di poster (pisahkan dengan |)</label>
         <input type="text" id="inputBullets" value="Silikon tebal lentur | Muat 3L–10L | Ada lubang gantung" />
       </div>
 
       <div class="control-group">
-        <label>Tagar relevan produk (tampil di poster & caption)</label>
+        <label>Tagar di poster</label>
         <input type="text" id="inputTags" value="#barangrumah #perlengkapankos #emberlipat #shopeehaul" />
       </div>
 
@@ -814,8 +916,8 @@
 
       <div class="control-row">
         <div class="control-group">
-          <label>Link Shopee Affiliate</label>
-          <input type="text" id="inputShopeeLink" placeholder="Tempel link Shopee affiliate di sini" />
+          <label>Link Shopee Affiliate (otomatis masuk caption)</label>
+          <input type="text" id="inputShopeeLink" placeholder="Tempel link Shopee di sini" />
         </div>
         <div class="control-group">
           <label>Kode Produk (katalog)</label>
@@ -844,7 +946,8 @@
       const headerTitle = document.getElementById("headerTitle");
       const btnSizeText = document.getElementById("btnSizeText");
       const downloadBtn = document.getElementById("downloadBtn");
-      const copyCaptionBtn = document.getElementById("copyCaptionBtn");
+      const copyLongBtn = document.getElementById("copyLongBtn");
+      const copyShortBtn = document.getElementById("copyShortBtn");
 
       const imageInput = document.getElementById("imageInput");
       const pickFilesBtn = document.getElementById("pickFilesBtn");
@@ -872,6 +975,11 @@
       const inputShopeeLink = document.getElementById("inputShopeeLink");
       const inputCode = document.getElementById("inputCode");
 
+      const inputCaptionLong = document.getElementById("inputCaptionLong");
+      const inputCaptionShort = document.getElementById("inputCaptionShort");
+      const longCharCounter = document.getElementById("longCharCounter");
+      const shortCharCounter = document.getElementById("shortCharCounter");
+
       const geminiApiKeyInput = document.getElementById("geminiApiKey");
       const generateAiBtn = document.getElementById("generateAiBtn");
       const lockTextBtn = document.getElementById("lockTextBtn");
@@ -884,6 +992,63 @@
       geminiApiKeyInput.addEventListener("input", () => {
         localStorage.setItem("cekdulu_gemini_api_key", geminiApiKeyInput.value.trim());
       });
+
+      function updateCharCounters() {
+        const longLen = inputCaptionLong.value.length;
+        longCharCounter.textContent = `${longLen} karakter`;
+
+        // Enforce max 280 chars for X/Threads
+        if (inputCaptionShort.value.length > 280) {
+          inputCaptionShort.value = inputCaptionShort.value.slice(0, 280);
+        }
+        const shortLen = inputCaptionShort.value.length;
+        shortCharCounter.textContent = `${shortLen} / 280`;
+        if (shortLen >= 275) {
+          shortCharCounter.classList.add("over");
+        } else {
+          shortCharCounter.classList.remove("over");
+        }
+      }
+
+      inputCaptionLong.addEventListener("input", updateCharCounters);
+      inputCaptionShort.addEventListener("input", updateCharCounters);
+
+      // Sync Shopee link & product code into captions automatically when typed
+      function syncLinksToCaptions() {
+        const link = inputShopeeLink.value.trim();
+        const code = inputCode.value.trim();
+
+        // Update Long Caption footer if link or code is entered
+        let longText = inputCaptionLong.value;
+        if (code) {
+          if (/^Kode:\s*.*/m.test(longText)) {
+            longText = longText.replace(/^Kode:\s*.*/m, `Kode: ${code}`);
+          } else {
+            longText = longText.replace(/(Harga:\s*.*)/m, `$1\nKode: ${code}`);
+          }
+        }
+        if (link) {
+          if (/^Link:\s*.*/m.test(longText)) {
+            longText = longText.replace(/^Link:\s*.*/m, `Link: ${link}`);
+          } else if (/Cek produknya di bio.*/m.test(longText)) {
+            longText = longText.replace(/Cek produknya di bio.*/m, `Link: ${link}`);
+          }
+        }
+        inputCaptionLong.value = longText;
+
+        // Append link to short caption if there is space within 280 chars
+        if (link && !inputCaptionShort.value.includes(link)) {
+          const baseShort = inputCaptionShort.value.replace(/\s*https?:\/\/\S+/g, "").trim();
+          const candidate = `${baseShort} ${link}`;
+          if (candidate.length <= 280) {
+            inputCaptionShort.value = candidate;
+          }
+        }
+        updateCharCounters();
+      }
+
+      inputShopeeLink.addEventListener("change", syncLinksToCaptions);
+      inputCode.addEventListener("change", syncLinksToCaptions);
 
       function setTextLock(locked) {
         isTextLocked = locked;
@@ -969,7 +1134,7 @@
       function updateSsUi() {
         const count = screenshotImages.length;
         if (count === 0) {
-          ssInfoText.textContent = "Wajib disarankan agar judul 100% akurat";
+          ssInfoText.textContent = "Wajib disarankan agar judul & harga akurat";
           ssInfoText.style.color = "#96b09f";
           clearSsBtn.style.display = "none";
         } else {
@@ -1013,6 +1178,8 @@
               <div class="ed-category">${escapeHtml(category)} • ${escapeHtml(num)}</div>
               <div class="ed-title">${escapeHtml(title)}</div>
               <div class="ed-desc">${escapeHtml(desc)}</div>
+              ${bulletsHtml ? `<div class="ed-bullets">${bulletsHtml}</div>` : ""}
+              ${tagsHtml}
             </div>
             <div class="ed-footer">
               <span class="ed-brand">${escapeHtml(brand)}</span>
@@ -1110,6 +1277,15 @@
         }
       });
 
+      // Smart trim to <= 280 chars without cutting words abruptly
+      function fitWithin280(text) {
+        const clean = String(text || "").trim();
+        if (clean.length <= 280) return clean;
+        const sliced = clean.slice(0, 277);
+        const lastSpace = sliced.lastIndexOf(" ");
+        return (lastSpace > 200 ? sliced.slice(0, lastSpace) : sliced) + "...";
+      }
+
       async function generateWithGemini(isManualClick = true) {
         if (isTextLocked && !isManualClick) return;
         if (isTextLocked && isManualClick) {
@@ -1132,27 +1308,38 @@
         generateAiBtn.disabled = true;
 
         try {
-          const promptText = `Kamu adalah copywriter katalog affiliate Indonesia "cekdulu.checkout" (slogan: "Murah itu wajib, bagus itu harus").
+          const userShopeeLink = inputShopeeLink.value.trim();
+          const userCode = inputCode.value.trim();
+          const userNum = inputNumber.value.trim() || "No. 001";
+
+          const promptText = `Kamu adalah senior copywriter manusia asli untuk akun kurasi barang rumah & kos Indonesia "cekdulu.checkout" (slogan: "Murah itu wajib, bagus itu harus").
 
 TUGAS UTAMA:
-Baca semua gambar yang dilampirkan. Jika ada screenshot halaman produk Shopee, WAJIB ikuti judul asli produk pada screenshot tersebut (jangan menebak-nebak fungsi yang berbeda dari judul Shopee-nya). Sarikan menjadi teks kartu katalog yang konsisten, jujur, tajam, dan natural.
+Baca semua gambar yang dilampirkan. Jika ada screenshot halaman produk Shopee, WAJIB ikuti judul asli, spesifikasi, dan harga pada screenshot tersebut. Sarikan menjadi teks poster DAN 2 versi caption media sosial dengan **HOOK 3 DETIK YANG NAMPOL BIKIN ORANG STOP SCROLL**.
 
-ATURAN WAJIB:
-1. KONSISTENSI NAMA PRODUK: Gunakan nama asli produk sesuai screenshot Shopee (bersihkan dari kata spam SEO seperti "COD / Bisa Bayar di Tempat / Termurah"). Jika tidak ada screenshot, sebutkan nama barang secara literal dan paling umum (contoh: "Nampan Buah Kaca 27 cm").
-2. ANTI-AI: Dilarang keras memakai kata klise AI ("solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya"). Pakai bahasa sehari-hari yang membumi.
-3. HOOK NAMPOL: 1 kalimat hook yang bikin berhenti scroll, maksimal 70 karakter. Wajib pakai 1 pola ini: "Jangan beli..." / "POV: ..." / "Baru ngeh..." / "Cuma Rp..." / "Kamar mandi kos...". Dilarang kalimat datar kayak "Nggak makan tempat". Harus ada masalah + rasa penasaran. Contoh yang bagus: "Kamar mandi kos 1x1 langsung lega." / "Jangan beli ember biasa sebelum liat ini."
-4. KEUNGGULAN: 3 fakta konkret (ukuran cm/liter, bahan, fitur fisik) dipisahkan tanda |.
-5. TAGAR RELEVAN: Buat 4-5 hashtag Bahasa Indonesia yang sangat relevan dengan produk dan kategorinya, huruf kecil semua, dipisah spasi.
-6. HARGA: Ekstrak harga terendah dari screenshot lalu bulatkan rapi ke ribuan terdekat. Jika ada variasi harga tulis "Mulai RpXX.XXX", jika tunggal tulis "RpXX.XXX", jika tidak ada info harga isi "".
+ATURAN WAJIB GAYA BAHASA:
+1. HOOK 3 DETIK ANTI-SKIP: Kalimat pertama wajib langsung menohok masalah harian yang relate, bikin penasaran, atau kontras antara harga murah vs kualitasnya (Contoh: "Meja tamu berantakan tiap ada tamu datang? Pindahin ke wadah kaca ini langsung kelihatan kayak ruang tamu hotel.", atau "Cuma Rp15 ribuan tapi bikin kamar mandi sempit berasa lega setengahnya.").
+2. DILARANG KERAS BAHASA AI: Jangan pernah pakai kata klise AI ("solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya"). Pakai gaya ngobrol jujur seperti teman yang baru nemu barang bagus.
+3. KONSISTENSI NAMA PRODUK: Gunakan nama asli produk sesuai screenshot Shopee (bersihkan dari spam keyword seperti "COD / Termurah").
+4. CAPTION PANJANG (untuk Pinterest, Facebook, Instagram — bebas panjang):
+   - Baris 1: Hook 3 detik nampol (1-2 kalimat singkat yang bikin berhenti scroll).
+   - Paragraf 2: Cerita singkat penggunaan nyata & detail bahan/ukuran dari screenshot (2-3 kalimat natural).
+   - Poin keunggulan (3-4 bullet dengan tanda •).
+   - Info Harga${userCode ? ` + Kode: ${userCode}` : ""} + ajakan cek link${userShopeeLink ? ` (${userShopeeLink})` : " di bio / katalog cekdulu.checkout"}.
+   - Diakhiri 5-7 hashtag relevan.
+5. CAPTION PENDEK (khusus X & Threads — WAJIB MAKSIMAL 240 KARAKTER agar aman di bawah batas 280 karakter):
+   - Langsung Hook 3 detik + manfaat inti + harga + 2 hashtag singkat${userShopeeLink ? ` + ${userShopeeLink}` : ""}. Padat, punchy, dan tidak terpotong!
 
 Keluarkan HANYA JSON murni tanpa markdown:
 {
-  "kategori": "Pilih 1 paling pas: Alat Dapur | Wadah & Rak | Alat Kebersihan | Kamar Mandi | Perlengkapan Rumah | Dekorasi Rumah | Gadget & Elektronik | Pakaian & Outfit",
+  "kategori": "Pilih 1: Alat Dapur | Wadah & Rak | Alat Kebersihan | Kamar Mandi | Perlengkapan Rumah | Dekorasi Rumah | Gadget & Elektronik | Pakaian & Outfit",
   "nama_produk": "Nama produk akurat & konsisten (2-5 kata + ukuran bila ada)",
-  "deskripsi": "1 kalimat hook natural maksimal 90 karakter",
-  "keunggulan": "Keunggulan 1 | Keunggulan 2 | Keunggulan 3",
-  "tagar": "#tag1 #tag2 #tag3 #tag4",
-  "harga": "Mulai RpXX.XXX atau RpXX.XXX atau kosong"
+  "deskripsi_poster": "1 kalimat hook singkat untuk kartu poster, maksimal 90 karakter",
+  "keunggulan_poster": "Keunggulan 1 | Keunggulan 2 | Keunggulan 3",
+  "tagar_poster": "#tag1 #tag2 #tag3 #tag4",
+  "harga": "Mulai RpXX.XXX atau RpXX.XXX atau kosong",
+  "caption_panjang": "Teks lengkap untuk Pinterest, Facebook & Instagram (gunakan \\n untuk baris baru)",
+  "caption_pendek": "Teks punchy khusus X & Threads WAJIB di bawah 250 karakter"
 }`;
 
           const combinedImages = [...screenshotImages, ...uploadedImages].slice(0, 5);
@@ -1172,7 +1359,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
           let lastErrorMsg = "";
 
           for (const modelName of modelsToTry) {
-            showStatus(`⏳ Menganalisis dengan ${modelName}...`, "#8ee0a3");
+            showStatus(`⏳ Meracik hook 3 detik & dual caption dengan ${modelName}...`, "#8ee0a3");
             response = await fetch(
               `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`,
               {
@@ -1187,7 +1374,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
                   }],
                   generationConfig: {
                     response_mime_type: "application/json",
-                    temperature: 0.1
+                    temperature: 0.25
                   }
                 })
               }
@@ -1210,15 +1397,24 @@ Keluarkan HANYA JSON murni tanpa markdown:
 
           if (parsed.kategori) inputCategory.value = parsed.kategori;
           if (parsed.nama_produk) inputTitle.value = parsed.nama_produk;
-          if (parsed.deskripsi) inputDesc.value = parsed.deskripsi;
-          if (parsed.keunggulan) inputBullets.value = parsed.keunggulan;
-          if (parsed.tagar) inputTags.value = parsed.tagar;
+          if (parsed.deskripsi_poster) inputDesc.value = parsed.deskripsi_poster;
+          if (parsed.keunggulan_poster) inputBullets.value = parsed.keunggulan_poster;
+          if (parsed.tagar_poster) inputTags.value = parsed.tagar_poster;
           if (parsed.harga && parsed.harga.trim() !== "") inputPrice.value = parsed.harga.trim();
 
+          if (parsed.caption_panjang) {
+            inputCaptionLong.value = parsed.caption_panjang.trim();
+          }
+          if (parsed.caption_pendek) {
+            inputCaptionShort.value = fitWithin280(parsed.caption_pendek);
+          }
+
+          syncLinksToCaptions();
+          updateCharCounters();
           hasGeneratedForCurrentProduct = true;
           setTextLock(true);
           renderPoster();
-          showStatus("✅ Teks & tagar diracik lalu dikunci otomatis (🔒) agar konsisten di semua ukuran!", "#8ee0a3");
+          showStatus("✅ Poster + Caption Panjang (IG/FB/Pin) & Pendek (X/Threads ≤280) siap!", "#8ee0a3");
         } catch (err) {
           console.error(err);
           showStatus(`❌ Gagal generate: ${err.message}`, "#f87171");
@@ -1235,32 +1431,35 @@ Keluarkan HANYA JSON murni tanpa markdown:
         aiStatus.textContent = msg;
       }
 
-      copyCaptionBtn.addEventListener("click", async () => {
-        const bulletsList = inputBullets.value
-          .split("|")
-          .map(b => b.trim())
-          .filter(Boolean)
-          .map(b => `• ${b}`)
-          .join("\n");
-
-        const shopeeLink = inputShopeeLink.value.trim();
-        const kodeProduk = inputCode.value.trim();
-        const linkBaris = shopeeLink ? `Link: ${shopeeLink}` : `Link produk ada di bio / katalog cekdulu.checkout 🛒`;
-        const kodeBaris = kodeProduk ? `\nKode: ${kodeProduk}` : ``;
-        const hookCaption = inputDesc.value.trim() || inputTitle.value;
-        
-        const captionText = `${hookCaption}\n\n${inputNumber.value} — ${inputTitle.value}\n\n${bulletsList}\n\nHarga: ${inputPrice.value}${kodeBaris}\n${linkBaris}\n\nSave dulu biar nggak hilang 📌\n${inputTags.value}`;
-
+      // Copy Long Caption (Pinterest, Facebook, Instagram)
+      copyLongBtn.addEventListener("click", async () => {
+        const textToCopy = inputCaptionLong.value.trim();
+        if (!textToCopy) return;
         try {
-          await navigator.clipboard.writeText(captionText);
-          const prev = copyCaptionBtn.textContent;
-          copyCaptionBtn.textContent = "✅ Tersalin!";
-          setTimeout(() => { copyCaptionBtn.textContent = prev; }, 2000);
+          await navigator.clipboard.writeText(textToCopy);
+          const origHtml = copyLongBtn.innerHTML;
+          copyLongBtn.innerHTML = `✅ Caption Panjang Tersalin!<span>Siap tempel ke IG / FB / Pinterest</span>`;
+          setTimeout(() => { copyLongBtn.innerHTML = origHtml; }, 2000);
         } catch (err) {
-          alert("Gagal menyalin caption: " + err.message);
+          alert("Gagal menyalin caption panjang: " + err.message);
         }
       });
 
+      // Copy Short Caption (X & Threads <= 280 chars)
+      copyShortBtn.addEventListener("click", async () => {
+        const textToCopy = fitWithin280(inputCaptionShort.value);
+        if (!textToCopy) return;
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          const origHtml = copyShortBtn.innerHTML;
+          copyShortBtn.innerHTML = `✅ Tersalin (${textToCopy.length}/280)!<span>Siap tempel ke X / Threads</span>`;
+          setTimeout(() => { copyShortBtn.innerHTML = origHtml; }, 2000);
+        } catch (err) {
+          alert("Gagal menyalin caption pendek: " + err.message);
+        }
+      });
+
+      // Clean Off-Screen PNG Export
       downloadBtn.addEventListener("click", async () => {
         downloadBtn.disabled = true;
         const originalHtml = downloadBtn.innerHTML;
@@ -1307,6 +1506,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
 
       renderThumbnails();
       updateSsUi();
+      updateCharCounters();
       renderPoster();
     });
 
