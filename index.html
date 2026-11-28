@@ -208,7 +208,6 @@
       padding: 12px;
       border: 2.5px solid #1b281f;
       border-radius: 26px;
-      box-shadow: 10px 10px 0px #dfd7c5;
       overflow: hidden;
       position: relative;
     }
@@ -227,7 +226,7 @@
       left: 38px;
       width: 140px;
       height: 34px;
-      background: rgba(217, 229, 212, 0.9);
+      background: rgba(217, 229, 212, 0.92);
       border-left: 2px dashed rgba(27, 40, 31, 0.25);
       border-right: 2px dashed rgba(27, 40, 31, 0.25);
       transform: rotate(-6deg);
@@ -244,7 +243,6 @@
       padding: 12px 26px;
       border-radius: 999px;
       transform: rotate(3.5deg);
-      box-shadow: 0 10px 22px rgba(27, 40, 31, 0.24);
       z-index: 5;
       display: flex;
       flex-direction: column;
@@ -270,7 +268,7 @@
       left: 26px;
       bottom: -16px;
       background: #e5efe3;
-      border: 2px solid #1b281f;
+      border: 2.5px solid #1b281f;
       color: #1b281f;
       font-family: 'Caveat', cursive;
       font-size: 36px;
@@ -278,7 +276,6 @@
       padding: 3px 20px 5px 20px;
       border-radius: 14px;
       transform: rotate(-2.5deg);
-      box-shadow: 4px 4px 0px #1b281f;
       z-index: 5;
     }
 
@@ -464,7 +461,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 14px;
+      padding-top: 16px;
       margin-top: 12px;
       border-top: 2px dashed #c8bfa8;
     }
@@ -475,14 +472,36 @@
       font-weight: 600;
       color: #4b5950;
     }
+
+    /* Clean HTML2Canvas-proof CTA Button (no buggy offset box-shadow) */
+    .hc-cta-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hc-cta-back {
+      position: absolute;
+      inset: 0;
+      background-color: #8eb897;
+      border-radius: 999px;
+      transform: translate(5px, 5px);
+      z-index: 1;
+    }
     .hc-cta-btn {
-      background: #1b281f;
+      position: relative;
+      z-index: 2;
+      background-color: #1b281f;
       color: #f8f5ed;
       font-size: 23px;
       font-weight: 700;
       padding: 14px 30px;
       border-radius: 999px;
-      box-shadow: 4px 4px 0px #8eb897;
+      border: 2px solid #1b281f;
+      line-height: 1.2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* ============================================================
@@ -632,7 +651,6 @@
       border-color: #68b07b;
     }
 
-    /* Dedicated Pinterest Section */
     .pinterest-box-section {
       background: #22171b;
       border: 1px solid #4d2934;
@@ -894,7 +912,7 @@
   <div class="app-container">
     <div class="header">
       <h1 id="headerTitle">Template Affiliate • 1080×1350</h1>
-      <p>Slot foto 1:1 presisi + paket khusus Pinterest (Judul & Deskripsi terpisah) + caption IG/FB & X.</p>
+      <p>Slot foto 1:1 presisi + paket khusus Pinterest + tombol CTA ekspor PNG bersih.</p>
     </div>
 
     <div class="size-tabs">
@@ -1409,6 +1427,16 @@ Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Mu
           </div>
         `;
 
+        const footerHtml = `
+          <div class="hc-footer">
+            <span class="hc-slogan">Murah wajib, bagus harus.</span>
+            <div class="hc-cta-wrap">
+              <div class="hc-cta-back"></div>
+              <div class="hc-cta-btn">${escapeHtml(cta)}</div>
+            </div>
+          </div>
+        `;
+
         if (currentSize === "x") {
           return `
             ${photoBlockHtml}
@@ -1426,10 +1454,7 @@ Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Mu
                 <div class="hc-desc">${escapeHtml(desc)}</div>
                 ${specsHtml ? `<div class="hc-specs">${specsHtml}</div>` : ""}
               </div>
-              <div class="hc-footer">
-                <span class="hc-slogan">Murah wajib, bagus harus.</span>
-                <span class="hc-cta-btn">${escapeHtml(cta)}</span>
-              </div>
+              ${footerHtml}
             </div>
           `;
         }
@@ -1450,10 +1475,7 @@ Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Mu
               <div class="hc-desc">${escapeHtml(desc)}</div>
               ${specsHtml ? `<div class="hc-specs">${specsHtml}</div>` : ""}
             </div>
-            <div class="hc-footer">
-              <span class="hc-slogan">Murah wajib, bagus harus.</span>
-              <span class="hc-cta-btn">${escapeHtml(cta)}</span>
-            </div>
+            ${footerHtml}
           </div>
         `;
       }
@@ -1711,7 +1733,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         aiStatus.textContent = msg;
       }
 
-      // Copy Pinterest Title
       copyPinTitleBtn.addEventListener("click", async () => {
         const textToCopy = stripEditionCodeFromTitle(inputPinTitle.value);
         if (!textToCopy) return;
@@ -1725,7 +1746,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         }
       });
 
-      // Copy Pinterest Description
       copyPinDescBtn.addEventListener("click", async () => {
         const textToCopy = inputPinDesc.value.trim();
         if (!textToCopy) return;
@@ -1739,7 +1759,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         }
       });
 
-      // Copy Long Caption (IG & FB)
       copyLongBtn.addEventListener("click", async () => {
         const textToCopy = inputCaptionLong.value.trim();
         if (!textToCopy) return;
@@ -1753,7 +1772,6 @@ Keluarkan HANYA JSON murni tanpa markdown:
         }
       });
 
-      // Copy Short Caption (X & Threads)
       copyShortBtn.addEventListener("click", async () => {
         const textToCopy = fitWithin280(inputCaptionShort.value);
         if (!textToCopy) return;
