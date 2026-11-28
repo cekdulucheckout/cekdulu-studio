@@ -632,6 +632,41 @@
       border-color: #68b07b;
     }
 
+    /* Dedicated Pinterest Section */
+    .pinterest-box-section {
+      background: #22171b;
+      border: 1px solid #4d2934;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .pinterest-section-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #fda4af;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-copy-pin {
+      background: #3b1d26;
+      color: #fecdd3;
+      border: 1px solid #6e3344;
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .btn-copy-pin:hover {
+      background: #4f2532;
+    }
+
     .caption-box-section {
       background: #161f19;
       border: 1px solid #2c3e32;
@@ -859,7 +894,7 @@
   <div class="app-container">
     <div class="header">
       <h1 id="headerTitle">Template Affiliate • 1080×1350</h1>
-      <p>Slot foto 1:1 presisi di semua ukuran + hook 3 detik nampol & CTA nomor edisi rapi.</p>
+      <p>Slot foto 1:1 presisi + paket khusus Pinterest (Judul & Deskripsi terpisah) + caption IG/FB & X.</p>
     </div>
 
     <div class="size-tabs">
@@ -881,19 +916,19 @@
       <div id="posterCard" class="poster-card size-ig"></div>
     </div>
 
-    <!-- Action Download & Dual Copy Caption -->
+    <!-- Action Download & Copy Buttons -->
     <div class="action-stack">
       <button type="button" class="btn-download" id="downloadBtn">
         💾 Unduh Gambar PNG (<span id="btnSizeText">1080×1350</span>)
       </button>
       <div class="caption-copy-row">
         <button type="button" class="btn-copy-long" id="copyLongBtn">
-          📋 Salin Caption Panjang
-          <span>Pinterest • Facebook • Instagram</span>
+          📋 Salin Caption IG / FB
+          <span>Instagram • Facebook</span>
         </button>
         <button type="button" class="btn-copy-short" id="copyShortBtn">
-          ⚡ Salin Caption Pendek
-          <span>X & Threads (Maks 280 karakter)</span>
+          ⚡ Salin Caption X / Threads
+          <span>Maks 280 karakter</span>
         </button>
       </div>
     </div>
@@ -916,7 +951,7 @@
       <!-- 2. AI Copywriter Box -->
       <div class="ai-box">
         <div class="ai-header">
-          <span>✨ Copywriter AI (Hook 3 Detik + CTA Nomor Edisi)</span>
+          <span>✨ Copywriter AI (Pinterest + IG/FB + X/Threads)</span>
           <label class="checkbox-inline">
             <input type="checkbox" id="autoGenOnUpload" checked /> Auto-jalan sekali
           </label>
@@ -933,7 +968,7 @@
 
         <div class="ai-btn-row">
           <button class="btn-ai" id="generateAiBtn" type="button">
-            ✍️ Racik Poster & 2 Caption
+            ✍️ Racik Poster & Semua Caption
           </button>
           <button class="btn-lock" id="lockTextBtn" type="button">
             🔓 Kunci Teks
@@ -942,16 +977,43 @@
         <div class="ai-status" id="aiStatus"></div>
       </div>
 
-      <!-- 3. Dual Caption Editor -->
-      <div class="caption-box-section">
-        <div class="caption-section-title">📝 Hasil Caption Siap Posting (Otomatis Terisi AI / Bisa Diedit)</div>
+      <!-- 3. KHUSUS PINTEREST (JUDUL & DESKRIPSI TERPISAH) -->
+      <div class="pinterest-box-section">
+        <div class="pinterest-section-title">📌 Khusus Pinterest (Judul & Deskripsi Siap Salin)</div>
 
         <div class="control-group">
           <div class="label-flex">
-            <label>Caption Panjang (Pinterest, Facebook, Instagram — bebas)</label>
+            <label>Judul Pin (hanya judul, tanpa kode edisi)</label>
+            <button type="button" class="btn-copy-pin" id="copyPinTitleBtn">📋 Salin Judul</button>
+          </div>
+          <input type="text" id="inputPinTitle" value="Ember Lipat Portable Silikon Tebal Hemat Tempat untuk Kos & Rumah" />
+        </div>
+
+        <div class="control-group">
+          <div class="label-flex">
+            <label>Deskripsi Pin (Hook + CTA Nomor Edisi + Tagar)</label>
+            <button type="button" class="btn-copy-pin" id="copyPinDescBtn">📋 Salin Deskripsi</button>
+          </div>
+          <textarea id="inputPinDesc" rows="7">Kamar mandi sempit tapi butuh ember gede buat rendam cucian?
+
+Yang mau cek barangnya langsung klik link di bio, cari nomor 001 ya!
+
+Ember lipat silikon tebal ini praktis banget buat anak kos atau rumah minimalis. Habis dipakai tinggal tekan sampai gepeng dan gantung di dinding, muat 3L sampai 10L tanpa makan tempat.
+
+#perlengkapankos #barangrumah #emberlipat #iderumahminimalis #organisasirumah #shopeehaul</textarea>
+        </div>
+      </div>
+
+      <!-- 4. Caption IG / FB & X / Threads -->
+      <div class="caption-box-section">
+        <div class="caption-section-title">📝 Caption IG / Facebook & X / Threads</div>
+
+        <div class="control-group">
+          <div class="label-flex">
+            <label>Caption Panjang (Instagram & Facebook)</label>
             <span class="char-counter" id="longCharCounter">0 karakter</span>
           </div>
-          <textarea id="inputCaptionLong" rows="9">Kamar mandi sempit tapi butuh ember gede buat rendam cucian?
+          <textarea id="inputCaptionLong" rows="8">Kamar mandi sempit tapi butuh ember gede buat rendam cucian?
 
 Yang mau cek barangnya langsung klik link di bio, cari nomor 001 ya!
 
@@ -972,7 +1034,7 @@ Cek nomor 001 di bio / katalog cekdulu.checkout
             <label>Caption Pendek (X & Threads — batas 280 karakter)</label>
             <span class="char-counter" id="shortCharCounter">0 / 280</span>
           </div>
-          <textarea id="inputCaptionShort" rows="5" maxlength="280">Kamar mandi sempit tapi butuh ember gede? Cek nomor 001 di bio!
+          <textarea id="inputCaptionShort" rows="4" maxlength="280">Kamar mandi sempit tapi butuh ember gede? Cek nomor 001 di bio!
 
 Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Muat sampai 10L, mulai Rp15rb aja.
 
@@ -980,7 +1042,7 @@ Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Mu
         </div>
       </div>
 
-      <!-- 4. Pengaturan Poster Visual -->
+      <!-- 5. Pengaturan Poster Visual -->
       <div class="control-row">
         <div class="control-group">
           <label>Zoom foto</label>
@@ -1074,6 +1136,11 @@ Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Mu
       const copyLongBtn = document.getElementById("copyLongBtn");
       const copyShortBtn = document.getElementById("copyShortBtn");
 
+      const inputPinTitle = document.getElementById("inputPinTitle");
+      const inputPinDesc = document.getElementById("inputPinDesc");
+      const copyPinTitleBtn = document.getElementById("copyPinTitleBtn");
+      const copyPinDescBtn = document.getElementById("copyPinDescBtn");
+
       const imageInput = document.getElementById("imageInput");
       const pickFilesBtn = document.getElementById("pickFilesBtn");
       const clearFilesBtn = document.getElementById("clearFilesBtn");
@@ -1124,16 +1191,22 @@ Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Mu
         return digits || "001";
       }
 
+      function stripEditionCodeFromTitle(title) {
+        return String(title || "")
+          .replace(/\(?\b(?:no\.?|kode|edisi)\s*#?\d+[a-z0-9]*\)?/gi, "")
+          .replace(/^[\s\-–:|]+|[\s\-–:|]+$/g, "")
+          .replace(/\s{2,}/g, " ")
+          .trim();
+      }
+
       function normalizeCaptionSpacing(rawText) {
         if (!rawText) return "";
-        // Convert literal \n if returned escaped, normalize CRLF, and ensure clean double-newline paragraph spacing
         let text = String(rawText)
           .replace(/\\n/g, "\n")
           .replace(/\r\n/g, "\n")
           .replace(/[ \t]+\n/g, "\n")
           .trim();
 
-        // Turn single newlines between paragraphs (except consecutive bullet lines) into double newlines
         const lines = text.split("\n");
         const out = [];
         for (let i = 0; i < lines.length; i++) {
@@ -1510,40 +1583,23 @@ Ember lipat silikon tebal, habis pakai tinggal gepengin & gantung di dinding. Mu
 Nomor edisi produk ini di katalog adalah: **${editionNumber}**.
 
 TUGAS UTAMA:
-Baca semua gambar yang dilampirkan. Jika ada screenshot halaman Shopee, WAJIB ikuti judul asli, spesifikasi, dan harga pada screenshot tersebut. Sarikan menjadi teks poster DAN 2 versi caption media sosial dengan **HOOK 3 DETIK YANG SUPER NAMPOL** dan **CTA NOMOR ${editionNumber} TEPAT SETELAH HOOK**.
+Baca semua gambar yang dilampirkan. Jika ada screenshot halaman Shopee, WAJIB ikuti judul asli, spesifikasi, dan harga pada screenshot tersebut. Sarikan menjadi teks poster, **PAKET KHUSUS PINTEREST (Judul & Deskripsi terpisah)**, serta **Caption IG/FB dan X/Threads**.
 
 ATURAN WAJIB GAYA BAHASA (ANTI-KAKU & ANTI-AI):
-1. HOOK 3 DETIK BIKIN STOP SCROLL: Kalimat pertama wajib langsung menohok masalah nyata yang bikin orang mikir "lah iya bener juga!" atau kaget lihat harga vs kualitasnya. Contoh gaya hook:
-   - "Nyesel baru tahu barang seberguna ini harganya cuma belasan ribu..."
-   - "Kamar mandi kosan sempit tapi butuh ember gede buat rendam cucian?"
-   - "Kirain barang Rp10 ribuan bakal ringkih, pas datang malah setebal ini..."
-2. DILARANG KERAS BAHASA ROBOT / AI: Haram hukumnya memakai kata-kata template AI seperti: "solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya", "tidak hanya itu", "dengan demikian". Tulis seperti lagi cerita jujur ke teman lewat chat WA.
-3. WAJIB ADA CTA NOMOR ${editionNumber} SETELAH HOOK: Tepat di paragraf kedua (setelah hook pembuka), wajib arahkan pembaca ke nomor edisi produk, contoh: "Yang mau cek barangnya langsung klik link di bio, cari nomor ${editionNumber} ya!" atau "Cek produk nomor ${editionNumber} di katalog bio!".
-4. JARAK ANTARPARAGRAF RAPI (TIDAK DEMPET): Pisahkan setiap bagian dengan baris kosong ganda (\\n\\n) agar teks lega, rapi, dan tidak nempel satu sama lain!
+1. HOOK 3 DETIK BIKIN STOP SCROLL: Kalimat pertama wajib langsung menohok masalah nyata yang bikin orang mikir "lah iya bener juga!" atau kaget lihat harga vs kualitasnya.
+2. DILARANG KERAS BAHASA ROBOT / AI: Haram hukumnya memakai kata-kata klise AI seperti: "solusi tepat", "solusi praktis", "hadir untuk", "tingkatkan kualitas", "revolusioner", "nikmati kemudahan", "didesain khusus", "sempurna untuk", "wajib punya", "tidak hanya itu", "dengan demikian". Tulis seperti lagi cerita jujur ke teman lewat chat WA.
+3. WAJIB ADA CTA NOMOR ${editionNumber} SETELAH HOOK: Tepat di paragraf kedua setelah hook pembuka, wajib arahkan pembaca ke nomor edisi produk, contoh: "Yang mau cek barangnya langsung klik link di bio, cari nomor ${editionNumber} ya!" atau "Cek nomor ${editionNumber} di katalog bio!".
+4. JARAK ANTARPARAGRAF RAPI (TIDAK DEMPET): Pisahkan setiap bagian dengan baris kosong ganda (\\n\\n).
 
-FORMAT 2 CAPTION YANG WAJIB DIHASILKAN:
-A. CAPTION PANJANG (untuk Pinterest, Facebook, Instagram — bebas panjang, rapi berjarak \\n\\n):
-   [Hook 3 detik yang nampol & relatable]
-   \\n\\n
-   [CTA Nomor Edisi: "Yang mau cek barangnya langsung klik link di bio, cari nomor ${editionNumber} ya!"]
-   \\n\\n
-   [Cerita singkat 2-3 kalimat natural soal pemakaian nyata & detail bahan/ukuran dari screenshot]
-   \\n\\n
-   • [Keunggulan 1]
-   \\n• [Keunggulan 2]
-   \\n• [Keunggulan 3]
-   \\n\\n
-   Harga: [Harga sesuai screenshot]
-   \\n${userShopeeLink ? `Link langsung: ${userShopeeLink}` : `Cek nomor ${editionNumber} di bio / katalog cekdulu.checkout`}
-   \\n\\n
-   [5-6 hashtag relevan]
-
-B. CAPTION PENDEK (khusus X & Threads — WAJIB MAKSIMAL 245 KARAKTER agar tidak terpotong batas 280 karakter, tetap rapi dengan \\n\\n):
-   [Hook 3 detik nampol] Cek nomor ${editionNumber} di bio!
-   \\n\\n
-   [1 kalimat singkat inti manfaat & harga]${userShopeeLink ? ` ${userShopeeLink}` : ""}
-   \\n\\n
-   [#tag1 #tag2]
+FORMAT OUTPUT YANG WAJIB DIHASILKAN:
+1. **pinterest_judul**: Judul Pin SEO-friendly untuk Pinterest (maksimal 80 karakter). **DILARANG KERAS** memasukkan kode edisi, "No. ${editionNumber}", atau angka kode produk di judul! Hanya judul nama & manfaat produk yang bikin orang ingin klik.
+2. **pinterest_deskripsi**: Deskripsi khusus Pinterest yang rapi berjarak \\n\\n, berisi:
+   - Paragraf 1: Hook 3 detik nampol & relatable
+   - Paragraf 2: CTA ke nomor edisi ("Yang mau cek barangnya langsung klik link di bio, cari nomor ${editionNumber} ya!")
+   - Paragraf 3: Penjelasan singkat bahan, ukuran, & manfaat nyata produk (2-3 kalimat santai)
+   - Paragraf 4: 5-7 tagar relevan digabung rapi di bagian bawah
+3. **caption_panjang**: Caption lengkap untuk Instagram & Facebook (Hook 3 detik + CTA nomor ${editionNumber} + cerita review jujur + poin keunggulan dengan • + harga & link + hashtag).
+4. **caption_pendek**: Caption punchy khusus X & Threads WAJIB di bawah 245 karakter (Hook + CTA nomor ${editionNumber} + manfaat & harga + 2 tagar).
 
 Keluarkan HANYA JSON murni tanpa markdown:
 {
@@ -1553,8 +1609,10 @@ Keluarkan HANYA JSON murni tanpa markdown:
   "keunggulan_poster": "Keunggulan 1 | Keunggulan 2 | Keunggulan 3",
   "tagar_poster": "#tag1 #tag2",
   "harga": "Mulai RpXX.XXX atau RpXX.XXX atau kosong",
-  "caption_panjang": "Teks lengkap berjarak rapi dengan \\n\\n",
-  "caption_pendek": "Teks punchy khusus X & Threads berjarak rapi dengan \\n\\n WAJIB di bawah 250 karakter"
+  "pinterest_judul": "Judul Pin murni tanpa nomor/kode edisi",
+  "pinterest_deskripsi": "Hook 3 detik + CTA nomor ${editionNumber} + detail produk + tagar relevan dengan jarak \\n\\n",
+  "caption_panjang": "Teks lengkap IG & FB berjarak rapi dengan \\n\\n",
+  "caption_pendek": "Teks punchy X & Threads berjarak rapi dengan \\n\\n WAJIB di bawah 245 karakter"
 }`;
 
           const combinedImages = [...screenshotImages, ...uploadedImages].slice(0, 5);
@@ -1574,7 +1632,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
           let lastErrorMsg = "";
 
           for (const modelName of modelsToTry) {
-            showStatus(`⏳ Meracik hook 3 detik + CTA No. ${editionNumber} dengan ${modelName}...`, "#8ee0a3");
+            showStatus(`⏳ Meracik Judul & Deskripsi Pinterest + Caption No. ${editionNumber} (${modelName})...`, "#8ee0a3");
             response = await fetch(
               `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`,
               {
@@ -1617,6 +1675,13 @@ Keluarkan HANYA JSON murni tanpa markdown:
           if (parsed.tagar_poster) inputTags.value = parsed.tagar_poster;
           if (parsed.harga && parsed.harga.trim() !== "") inputPrice.value = parsed.harga.trim();
 
+          if (parsed.pinterest_judul) {
+            inputPinTitle.value = stripEditionCodeFromTitle(parsed.pinterest_judul);
+          }
+          if (parsed.pinterest_deskripsi) {
+            inputPinDesc.value = normalizeCaptionSpacing(parsed.pinterest_deskripsi);
+          }
+
           if (parsed.caption_panjang) {
             inputCaptionLong.value = normalizeCaptionSpacing(parsed.caption_panjang);
           }
@@ -1629,7 +1694,7 @@ Keluarkan HANYA JSON murni tanpa markdown:
           hasGeneratedForCurrentProduct = true;
           setTextLock(true);
           renderPoster();
-          showStatus(`✅ Siap! Hook 3 detik + CTA No. ${editionNumber} & jarak paragraf rapi sudah terisi.`, "#8ee0a3");
+          showStatus(`✅ Siap! Judul & Deskripsi Pinterest + Caption No. ${editionNumber} sudah terisi.`, "#8ee0a3");
         } catch (err) {
           console.error(err);
           showStatus(`❌ Gagal generate: ${err.message}`, "#f87171");
@@ -1646,19 +1711,49 @@ Keluarkan HANYA JSON murni tanpa markdown:
         aiStatus.textContent = msg;
       }
 
+      // Copy Pinterest Title
+      copyPinTitleBtn.addEventListener("click", async () => {
+        const textToCopy = stripEditionCodeFromTitle(inputPinTitle.value);
+        if (!textToCopy) return;
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          const orig = copyPinTitleBtn.textContent;
+          copyPinTitleBtn.textContent = "✅ Judul Tersalin!";
+          setTimeout(() => { copyPinTitleBtn.textContent = orig; }, 1800);
+        } catch (err) {
+          alert("Gagal menyalin judul Pinterest: " + err.message);
+        }
+      });
+
+      // Copy Pinterest Description
+      copyPinDescBtn.addEventListener("click", async () => {
+        const textToCopy = inputPinDesc.value.trim();
+        if (!textToCopy) return;
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          const orig = copyPinDescBtn.textContent;
+          copyPinDescBtn.textContent = "✅ Deskripsi Tersalin!";
+          setTimeout(() => { copyPinDescBtn.textContent = orig; }, 1800);
+        } catch (err) {
+          alert("Gagal menyalin deskripsi Pinterest: " + err.message);
+        }
+      });
+
+      // Copy Long Caption (IG & FB)
       copyLongBtn.addEventListener("click", async () => {
         const textToCopy = inputCaptionLong.value.trim();
         if (!textToCopy) return;
         try {
           await navigator.clipboard.writeText(textToCopy);
           const origHtml = copyLongBtn.innerHTML;
-          copyLongBtn.innerHTML = `✅ Caption Panjang Tersalin!<span>Siap tempel ke IG / FB / Pinterest</span>`;
+          copyLongBtn.innerHTML = `✅ Caption Tersalin!<span>Siap tempel ke IG / Facebook</span>`;
           setTimeout(() => { copyLongBtn.innerHTML = origHtml; }, 2000);
         } catch (err) {
-          alert("Gagal menyalin caption panjang: " + err.message);
+          alert("Gagal menyalin caption: " + err.message);
         }
       });
 
+      // Copy Short Caption (X & Threads)
       copyShortBtn.addEventListener("click", async () => {
         const textToCopy = fitWithin280(inputCaptionShort.value);
         if (!textToCopy) return;
